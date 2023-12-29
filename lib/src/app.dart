@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'features/pages/registration_page/login_page.dart';
-import 'features/pages/registration_page/sign_up_page.dart';
-import 'features/screens/home_screen/widgets/bottombar.dart';
+import 'features/screens/registration_screen/login_page.dart';
+import 'features/screens/registration_screen/sign_up_page.dart';
+import 'features/screens/home_screen/pages/bottombar.dart';
 import 'features/screens/home_screen/home_screen.dart';
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,12 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
       routes: {
+        '/': (context) => CustomBottombar(),
         '/signup': (context) => SignUp(),
         '/login': (context) => LogInScreen(),
         '/homescreen': (context) => HomeScreen(),
-        '/home': (context) => CustomBottombar(),
       },
-      home: LogInScreen(),
     );
   }
 }

@@ -21,7 +21,9 @@ class AppColors {
 
   static const red = Colors.red;
   static const green = Colors.green;
+  static const green20 = Color(0xff59dbb7);
   static const blue = Colors.blue;
+  static const blue80 = Color(0xff1C1E52);
   static const pink = Colors.pink;
   static const orange = Colors.orange;
   static const deepPurple = Colors.deepPurpleAccent;

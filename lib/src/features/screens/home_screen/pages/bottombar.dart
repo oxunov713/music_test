@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../common/styles/app_colors.dart';
+import '../../library_screen/cloud_screen.dart';
+import '../../search_screen/search_screen.dart';
 import '../home_screen.dart';
 
 class CustomBottombar extends StatefulWidget {
@@ -17,31 +19,8 @@ class _CustomBottombarState extends State<CustomBottombar> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    Scaffold(
-      backgroundColor: AppColors.dark,
-      body: Builder(builder: (context) {
-        return Center(
-            child: SizedBox.square(
-          dimension: 200,
-          child: ColoredBox(
-            color: Colors.green,
-            child: CustomPaint(),
-          ),
-        ));
-      }),
-    ),
-    Scaffold(
-      backgroundColor: AppColors.dark,
-      body: Builder(builder: (context) {
-        return Center(
-          child: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/login");
-              },
-              icon: Icon(Icons.logout)),
-        );
-      }),
-    ),
+    SearchScreen(),
+    Library(),
   ];
 
   @override

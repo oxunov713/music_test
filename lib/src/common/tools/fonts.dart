@@ -4,7 +4,8 @@ enum FontFamily {
   SpaceGrotesk("SpaceGrotesk"),
   Exo2("Exo2"),
   Jost("Jost"),
-  Montserrat("Montserrat");
+  Montserrat("Montserrat"),
+  Rubik("Rubik");
 
   const FontFamily(this.fFamily);
   final String? fFamily;

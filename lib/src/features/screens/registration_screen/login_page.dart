@@ -1,111 +1,66 @@
 import 'package:flutter/material.dart';
 
+
+import '../../../common/styles/app_colors.dart';
 import '../../../common/styles/app_icons.dart';
 import '../../../common/tools/fonts.dart';
 import 'widgets/custom_inkwell.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<LogInScreen> createState() => _LogInScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LogInScreenState extends State<LogInScreen> {
   bool isVisible = true;
-  bool isSignup = false;
+  bool isSigning = false;
   String? isEnable;
   String? isEnablePassword;
 
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: const Color(0x8270acd3),
+        backgroundColor: AppColors.loginBackground,
         body: ListView(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 80),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 40, right: 20, bottom: 12),
-                  child: TextField(
-                    controller: _usernameController,
-                    onChanged: (value) {},
-                    onSubmitted: (value) {},
-                    decoration: InputDecoration(
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Color(0xFFBC0063),
+                Center(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        text: "Welcome to",
+                        style: TextStyle(
+                          fontFamily: FontFamily.Jost.fFamily,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      errorText: isEnable,
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Color(0xFFBC0063),
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Colors.green,
-                        ),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(217, 217, 217, 0.5),
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      fillColor: const Color.fromRGBO(217, 217, 217, 0.5),
-                      filled: true,
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(Icons.person, size: 20),
-                      ),
-                      hintText: "  Username",
-                      hintStyle: TextStyle(
-                        fontSize: 15,
-                        fontFamily: FontFamily.Montserrat.fFamily,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
+                        children: [
+                          TextSpan(
+                            text: "\nDõppi Music",
+                            style: TextStyle(
+                              fontFamily: FontFamily.Jost.fFamily,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 45,
+                            ),
+                          ),
+                        ]),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 20, top: 12, right: 20, bottom: 12),
+                      left: 20, top: 40, right: 20, bottom: 12),
                   child: TextField(
-                    controller: _emailController,
+                    controller: _email,
                     onChanged: (value) {},
                     onSubmitted: (value) {},
                     decoration: InputDecoration(
@@ -171,6 +126,7 @@ class _SignUpState extends State<SignUp> {
                     right: 20,
                   ),
                   child: TextField(
+                    controller: _password,
                     onChanged: (value) {},
                     onSubmitted: (value) {},
                     decoration: InputDecoration(
@@ -231,88 +187,8 @@ class _SignUpState extends State<SignUp> {
                           size: 20,
                         ),
                       ),
-                      hintText: " Password",
+                      hintText: "  Password",
                       hintStyle: TextStyle(
-                        fontSize: 15,
-                        fontFamily: FontFamily.Montserrat.fFamily,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    obscuringCharacter: "*",
-                    obscureText: isVisible,
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    top: 13,
-                    right: 20,
-                  ),
-                  child: TextField(
-                    controller: _passwordController,
-                    onChanged: (value) {},
-                    onSubmitted: (value) {},
-                    decoration: InputDecoration(
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFFBC0063),
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Colors.green,
-                        ),
-                      ),
-                      errorText: isEnablePassword,
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Color(0xFFBC0063),
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(217, 217, 217, 0.5),
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          isVisible = !isVisible;
-                          setState(() {});
-                        },
-                        child: (!isVisible)
-                            ? const Icon(
-                                Icons.visibility_off,
-                              )
-                            : const Icon(
-                                Icons.visibility,
-                              ),
-                      ),
-                      fillColor: const Color.fromRGBO(217, 217, 217, 0.5),
-                      filled: true,
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(
-                          Icons.lock,
-                          size: 20,
-                        ),
-                      ),
-                      hintText: "Confirm Password",
-                      hintStyle:  TextStyle(
                         fontSize: 15,
                         fontFamily: FontFamily.Montserrat.fFamily,
                         fontWeight: FontWeight.w500,
@@ -327,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/home");
+                      Navigator.pushNamed(context, "/");
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -337,10 +213,10 @@ class _SignUpState extends State<SignUp> {
                       shape: const StadiumBorder(),
                       fixedSize: const Size(300, 50),
                     ),
-                    child: isSignup
-                        ? CircularProgressIndicator()
-                        :  Text(
-                            "Sign up",
+                    child: isSigning
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            "Sign in",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -349,7 +225,19 @@ class _SignUpState extends State<SignUp> {
                           ),
                   ),
                 ),
-                 Padding(
+                Center(
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Forgot the password?",
+                      style: TextStyle(
+                          color: Color(0xFFBC0063),
+                          fontFamily: FontFamily.Jost.fFamily,
+                          fontSize: 13),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -399,28 +287,31 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                   Text(
-                    "Already have an account? ",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                      fontFamily: FontFamily.Montserrat.fFamily,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, "/login"),
-                    child:  Text(
-                      "Sign in",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have account? ",
                       style: TextStyle(
-                        fontFamily: FontFamily.Montserrat.fFamily,
                         fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFFBC0063),
+                        color: Colors.grey,
+                        fontFamily: FontFamily.Montserrat.fFamily,
                       ),
                     ),
-                  ),
-                ]),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(context, "/signup"),
+                      child: Text(
+                        "Sign up",
+                        style: TextStyle(
+                          fontFamily: FontFamily.Montserrat.fFamily,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFFBC0063),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ],

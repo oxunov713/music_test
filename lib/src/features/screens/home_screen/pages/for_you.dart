@@ -26,14 +26,10 @@ class ForYouPage extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: Text(
                 "Recently played",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(
-                  fontFamily: FontFamily.SpaceGrotesk.fFamily,
-                  color: AppColors.white,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontFamily: FontFamily.SpaceGrotesk.fFamily,
+                      color: AppColors.white,
+                    ),
               ),
             ),
           ),
@@ -44,7 +40,7 @@ class ForYouPage extends StatelessWidget {
               child: SizedBox(
                 height: 100,
                 child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return SizedBox.square(
                       dimension: 100,
@@ -73,22 +69,21 @@ class ForYouPage extends StatelessWidget {
                           ),
                           Text(
                             "Last song",
-                            style: Theme
-                                .of(context)
+                            style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                              fontFamily: FontFamily.JosefinSans.fFamily,
-                              color: AppColors.blueTextStory,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                                  fontFamily: FontFamily.JosefinSans.fFamily,
+                                  color: AppColors.blueTextStory,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                         ],
                       ),
                     );
                   },
                   separatorBuilder: (context, index) =>
-                  const SizedBox(width: 10),
+                      const SizedBox(width: 10),
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                 ),
@@ -101,14 +96,10 @@ class ForYouPage extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: Text(
                 "Made for you",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(
-                  fontFamily: FontFamily.Montserrat.fFamily,
-                  color: AppColors.white,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontFamily: FontFamily.Montserrat.fFamily,
+                      color: AppColors.white,
+                    ),
               ),
             ),
           ),
@@ -123,14 +114,13 @@ class ForYouPage extends StatelessWidget {
                 mainAxisSpacing: 15,
               ),
               delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                    MixCard(
-                      artistName: "Billie,Zivert,Inna etc.",
-                      imagePath:
+                (context, index) => MixCard(
+                  artistName: "Billie,Zivert,Inna etc.",
+                  imagePath:
                       "https://yt3.googleusercontent.com/7Yn4iyqLwXrYUk24EYEOUciGEBwuEJpFp4ABj3blSeh_zvWDD46XW3EwaByEhVghr3eVrmTmoA=s900-c-k-c0x00ffffff-no-rj",
-                      mixTitle: "Mix ${index + 1}",
-                      color: _colors[index],
-                    ),
+                  mixTitle: "Mix ${index + 1}",
+                  color: _colors[index],
+                ),
                 childCount: 6,
               ),
             ),
@@ -140,24 +130,20 @@ class ForYouPage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20, left: 10, bottom: 15),
             sliver: SliverToBoxAdapter(
               child: Text(
-                "Your top 10 artists",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(
-                  fontFamily: FontFamily.Jost.fFamily,
-                  color: AppColors.white,
-                ),
+                "Your top 10 songs",
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontFamily: FontFamily.Jost.fFamily,
+                      color: AppColors.white,
+                    ),
               ),
             ),
           ),
-          //Top 10 widgets
+          //Top 10  songs widgets
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                  (context, index) {
+              (context, index) {
                 return ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   leading: const CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
@@ -165,34 +151,139 @@ class ForYouPage extends StatelessWidget {
                   ),
                   title: Text(
                     "Mockinbird ",
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(
-                      fontFamily: FontFamily.JosefinSans.fFamily,
-                      color: AppColors.blueTextStory,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontFamily: FontFamily.JosefinSans.fFamily,
+                          color: AppColors.blueTextStory,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                   ),
                   subtitle: Text(
                     "Eminem ",
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(
-                      fontFamily: FontFamily.JosefinSans.fFamily,
-                      color: AppColors.blueTextStory,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontFamily: FontFamily.JosefinSans.fFamily,
+                          color: AppColors.blueTextStory,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                   ),
                   trailing: PopupMenuButton(
-                    itemBuilder:(context) => [],
+                    itemBuilder: (context) => [],
                   ),
                 );
               },
               childCount: 10,
+            ),
+          ),
+          //Top artist text
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 20, left: 10, bottom: 15),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                "Your top 10 artists",
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontFamily: FontFamily.Jost.fFamily,
+                      color: AppColors.white,
+                    ),
+              ),
+            ),
+          ),
+          //Top artist list
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: 120,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return SizedBox.square(
+                      dimension: 120,
+                      child: Column(
+                        children: [
+                          const CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                "https://cdn.xabardor.uz/media/photo/2023/04/27/news_photo-20230501-171318.webp"),
+                            radius: 45,
+                          ),
+                          Text(
+                            "Ummon",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontFamily: FontFamily.JosefinSans.fFamily,
+                                  color: AppColors.blueTextStory,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10),
+                  itemCount: 15,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+            ),
+          ),
+          //Radio text
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 20, left: 10, bottom: 15),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                "Radios",
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontFamily: FontFamily.JosefinSans.fFamily,
+                      color: AppColors.white,
+                    ),
+              ),
+            ),
+          ),
+          //Radio listview
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: 130,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return SizedBox.square(
+                      dimension: 120,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://visitdpstudio.net/radio_world/upload/96542684-2023-02-15.png"),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "Oriat Dono",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontFamily: FontFamily.JosefinSans.fFamily,
+                                  color: AppColors.blueTextStory,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10),
+                  itemCount: 15,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
             ),
           ),
         ],

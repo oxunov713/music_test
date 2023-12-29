@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_test/src/common/styles/app_colors.dart';
+import 'package:music_test/src/features/screens/home_screen/widgets/profile_picture.dart';
 
 import '../../../../common/tools/fonts.dart';
 
@@ -20,10 +21,11 @@ class CustomAppBar extends StatelessWidget {
               letterSpacing: 3,
               overflow: TextOverflow.visible),
         ),
-        const CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://i.scdn.co/image/ab67706c0000da845d58739ab68aae003ab5ec87"),
-          radius: 25,
+        GestureDetector(
+          onTap: () {
+            Scaffold.of(context).openEndDrawer();
+          },
+          child: ProfilePicture(),
         ),
       ],
     );
