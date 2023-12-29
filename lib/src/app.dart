@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'features/screens/home_screen/pages/mix_page.dart';
+import 'features/screens/pages/artists.dart';
 import 'features/screens/registration_screen/login_page.dart';
 import 'features/screens/registration_screen/sign_up_page.dart';
 import 'features/screens/home_screen/pages/bottombar.dart';
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUp(),
         '/login': (context) => LogInScreen(),
         '/homescreen': (context) => HomeScreen(),
+        '/mix_page': (context) => MixPage(),
+        '/artists': (context) => Artists(),
       },
     );
   }

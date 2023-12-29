@@ -25,7 +25,8 @@ class SearchScreen extends StatelessWidget {
                     ),
                 onChanged: (value) {
                   print(value);
-                },keyboardType: TextInputType.number,
+                },
+                keyboardType: TextInputType.number,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -42,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 200),
+            SizedBox(height: 150),
             LottieBuilder.asset("assets/images/Animation - 1700307564690.json")
           ],
         ),

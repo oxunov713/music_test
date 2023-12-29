@@ -166,27 +166,30 @@ class _TrendingPageState extends State<TrendingPage> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://i.scdn.co/image/ab6761610000e5ebab05bf54edfc5909a8844f64"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Shohruhxon",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://i.scdn.co/image/ab6761610000e5ebab05bf54edfc5909a8844f64"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Shohruhxon",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -220,27 +223,30 @@ class _TrendingPageState extends State<TrendingPage> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://b6s54eznn8xq.merlincdn.net/Uploads/Films/uzeyir-mehdizade-20231121163749cc1d3d94501443499e3b6efbc55dc19c.jpg"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Uzeyir Mehdizade",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://b6s54eznn8xq.merlincdn.net/Uploads/Films/uzeyir-mehdizade-20231121163749cc1d3d94501443499e3b6efbc55dc19c.jpg"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Uzeyir Mehdizade",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -274,27 +280,30 @@ class _TrendingPageState extends State<TrendingPage> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://thisis-images.scdn.co/37i9dQZF1DZ06evO01zPFb-default.jpg"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Rauf & Faik",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://thisis-images.scdn.co/37i9dQZF1DZ06evO01zPFb-default.jpg"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Rauf & Faik",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -328,27 +337,30 @@ class _TrendingPageState extends State<TrendingPage> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn.britannica.com/92/211792-050-E764F875/American-singer-Ariana-Grande-2018.jpg"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Ariana Grande",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://cdn.britannica.com/92/211792-050-E764F875/American-singer-Ariana-Grande-2018.jpg"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Ariana Grande",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -382,27 +394,30 @@ class _TrendingPageState extends State<TrendingPage> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/73d0e6ad-7ca3-4d9a-945d-0c625e270d64/220x330"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Dua Lipa",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/73d0e6ad-7ca3-4d9a-945d-0c625e270d64/220x330"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Dua Lipa",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

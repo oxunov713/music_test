@@ -195,27 +195,30 @@ class ForYouPage extends StatelessWidget {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return SizedBox.square(
-                      dimension: 120,
-                      child: Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn.xabardor.uz/media/photo/2023/04/27/news_photo-20230501-171318.webp"),
-                            radius: 45,
-                          ),
-                          Text(
-                            "Ummon",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontFamily: FontFamily.JosefinSans.fFamily,
-                                  color: AppColors.blueTextStory,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ),
-                        ],
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      child: SizedBox.square(
+                        dimension: 120,
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://cdn.xabardor.uz/media/photo/2023/04/27/news_photo-20230501-171318.webp"),
+                              radius: 45,
+                            ),
+                            Text(
+                              "Ummon",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.JosefinSans.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
