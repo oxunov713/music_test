@@ -1,30 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music_test/src/data/providers/home_screen_provider.dart';
+import 'package:music_test/src/features/screens/pages/bottom_player.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
-import 'bottom_player.dart';
+import '../home_screen/widgets/mix_cache_image.dart';
 
-class Artists extends StatefulWidget {
-  const Artists({super.key});
+class MixPage extends StatefulWidget {
+  const MixPage({super.key});
 
   @override
-  State<Artists> createState() => _ArtistsState();
+  State<MixPage> createState() => _MixPageState();
 }
 
-class _ArtistsState extends State<Artists> {
+class _MixPageState extends State<MixPage> {
   bool isSaved = false;
   bool isFollow = false;
-  late HomeScreenViewModel homeRead;
-  late HomeScreenViewModel homeWatch;
+
+  late HomeScreenViewModel viewModelWatch;
+  late HomeScreenViewModel viewModelRead;
 
   @override
   void didChangeDependencies() {
-    homeRead = context.read<HomeScreenViewModel>();
-    homeWatch = context.watch<HomeScreenViewModel>();
+    viewModelWatch = context.watch<HomeScreenViewModel>();
+    viewModelRead = context.read<HomeScreenViewModel>();
     super.didChangeDependencies();
   }
 
@@ -41,36 +43,32 @@ class _ArtistsState extends State<Artists> {
                 backgroundColor: AppColors.dark,
                 pinned: true,
                 automaticallyImplyLeading: false,
-                expandedHeight: 260,
+                expandedHeight: 400,
                 stretch: true,
+                actions: [
+                  PopupMenuButton(
+                    iconSize: 25,
+                    iconColor: AppColors.white,
+                    itemBuilder: (context) => <PopupMenuEntry>[],
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: false,
-                  background: CachedNetworkImage(
-                    imageUrl: homeWatch.currentSingerImage,
-                    imageBuilder: (context, imageProvider) => Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                  background: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
                     ),
-                    placeholder: (context, url) => Shimmer.fromColors(
-                      baseColor: Colors.grey[700]!,
-                      highlightColor: Colors.grey[500]!,
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        color: Colors.white,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                    itemCount: viewModelWatch.gridUrls.length,
+                    itemBuilder: (context, index) {
+                      return CustomCached(
+                        url: viewModelWatch.gridUrls[index],
+                      );
+                    },
                   ),
                   title: Text(
-                    'Ed Sheeran',
+                    'Mix ${viewModelWatch.currentMix + 1}',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontFamily: FontFamily.Jost.fFamily,
                           color: AppColors.white,
@@ -84,17 +82,36 @@ class _ArtistsState extends State<Artists> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 sliver: SliverToBoxAdapter(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          "23,000,12 monthly listeners",
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${viewModelWatch.currentMixArtist}\n",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
                                     fontFamily: FontFamily.JosefinSans.fFamily,
                                     color: AppColors.green,
                                     overflow: TextOverflow.ellipsis,
                                   ),
+                            ),
+                            Text(
+                              "Made for Azizbek Oxunov",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontFamily: FontFamily.SpaceGrotesk.fFamily,
+                                    color: AppColors.blueTextStory,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
                       Row(
@@ -102,23 +119,12 @@ class _ArtistsState extends State<Artists> {
                         children: [
                           Row(
                             children: [
-                              OutlinedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isFollow = !isFollow;
-                                  });
-                                },
-                                child: Text(
-                                  isFollow ? "Follow" : "Following",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        fontFamily:
-                                            FontFamily.JosefinSans.fFamily,
-                                        color: AppColors.green,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.add_circle_outline,
+                                  color: AppColors.green,
+                                  size: 35,
                                 ),
                               ),
                               SizedBox(width: 15),
@@ -150,13 +156,13 @@ class _ArtistsState extends State<Artists> {
                 delegate: SliverChildBuilderDelegate(
                   childCount: 20,
                   (context, index) => ListTile(
-                    onTap: () => homeRead.changeCurrent(homeWatch.currentImage),
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(4.0),
                       child: CachedNetworkImage(
-                        imageUrl: homeWatch.currentImage,
+                        imageUrl:
+                            "https://estaticos-cdn.prensaiberica.es/clip/6422556a-ec32-4a86-9e6f-8f8e6b575baa_alta-libre-aspect-ratio_default_0.jpg",
                         imageBuilder: (context, imageProvider) => Container(
                           width: 45,
                           height: 45,
@@ -223,7 +229,7 @@ class _ArtistsState extends State<Artists> {
               ),
             ],
           ),
-          BottomPlayer(),
+          BottomPlayer()
         ],
       ),
     );

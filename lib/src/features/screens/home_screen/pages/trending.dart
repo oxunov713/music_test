@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../common/styles/app_colors.dart';
 import '../../../../common/tools/fonts.dart';
+import '../../../../data/providers/home_screen_provider.dart';
 
 class TrendingPage extends StatefulWidget {
   const TrendingPage({super.key});
@@ -12,6 +14,16 @@ class TrendingPage extends StatefulWidget {
 }
 
 class _TrendingPageState extends State<TrendingPage> {
+  late HomeScreenViewModel viewModelWatch;
+  late HomeScreenViewModel viewModelRead;
+
+  @override
+  void didChangeDependencies() {
+    viewModelWatch = context.watch<HomeScreenViewModel>();
+    viewModelRead = context.read<HomeScreenViewModel>();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,8 +128,9 @@ class _TrendingPageState extends State<TrendingPage> {
                             width: 100,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://lostposters.com/wp-content/uploads/2022/12/rs_w_1200_h_1200_0844c266-cae3-44f7-ac3a-4e7348ea8414.jpg"),
+                                fit: BoxFit.cover,
+                                image:
+                                    NetworkImage(viewModelRead.gridUrls[index]),
                               ),
                             ),
                           ),
@@ -167,7 +180,11 @@ class _TrendingPageState extends State<TrendingPage> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            "https://i.scdn.co/image/ab6761610000e5ebab05bf54edfc5909a8844f64";
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(
@@ -224,7 +241,11 @@ class _TrendingPageState extends State<TrendingPage> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            "https://b6s54eznn8xq.merlincdn.net/Uploads/Films/uzeyir-mehdizade-20231121163749cc1d3d94501443499e3b6efbc55dc19c.jpg";
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(
@@ -281,7 +302,11 @@ class _TrendingPageState extends State<TrendingPage> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            "https://thisis-images.scdn.co/37i9dQZF1DZ06evO01zPFb-default.jpg";
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(
@@ -338,7 +363,11 @@ class _TrendingPageState extends State<TrendingPage> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            "https://cdn.britannica.com/92/211792-050-E764F875/American-singer-Ariana-Grande-2018.jpg";
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(
@@ -395,7 +424,11 @@ class _TrendingPageState extends State<TrendingPage> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/73d0e6ad-7ca3-4d9a-945d-0c625e270d64/220x330";
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(

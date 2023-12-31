@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music_test/src/features/screens/pages/bottom_player.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
@@ -15,6 +20,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.dark,
+
       endDrawer: CustomDrawerProfile(),
       body: Padding(
         padding: EdgeInsets.only(right: 10, left: 10, top: 40),
@@ -23,49 +29,54 @@ class HomeScreen extends StatelessWidget {
             CustomAppBar(),
             SizedBox(height: 20),
             Expanded(
-              child: DefaultTabController(
-                length: 2,
-                initialIndex: 0,
-                child: Column(
-                  children: [
-                    SegmentedTabControl(
-                      radius: const Radius.circular(25),
-                      backgroundColor: AppColors.dark,
-                      splashHighlightColor: AppColors.dark,
-                      indicatorColor: AppColors.white30,
-                      tabTextColor: AppColors.white80,
-                      selectedTabTextColor: AppColors.white80,
-                      squeezeIntensity: 2,
-                      height: 40,
-                      tabPadding: const EdgeInsets.symmetric(horizontal: 8),
-                      textStyle:
-                          Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                fontFamily: FontFamily.Exo2.fFamily,
-                              ),
-                      tabs: const [
-                        SegmentTab(
-                          label: 'For You',
-                          selectedTextColor: AppColors.blueTextStory,
-                          splashColor: AppColors.dark,
+              child: Stack(
+                children: [
+                  DefaultTabController(
+                    length: 2,
+                    initialIndex: 0,
+                    child: Column(
+                      children: [
+                        SegmentedTabControl(
+                          radius: const Radius.circular(25),
+                          backgroundColor: AppColors.dark,
+                          splashHighlightColor: AppColors.dark,
+                          indicatorColor: AppColors.white30,
+                          tabTextColor: AppColors.white80,
+                          selectedTabTextColor: AppColors.white80,
+                          squeezeIntensity: 2,
+                          height: 40,
+                          tabPadding: const EdgeInsets.symmetric(horizontal: 8),
+                          textStyle:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontFamily: FontFamily.Exo2.fFamily,
+                                  ),
+                          tabs: const [
+                            SegmentTab(
+                              label: 'For You',
+                              selectedTextColor: AppColors.blueTextStory,
+                              splashColor: AppColors.dark,
+                            ),
+                            SegmentTab(
+                              label: 'Trending',
+                              selectedTextColor: AppColors.blueTextStory,
+                              splashColor: Colors.transparent,
+                            ),
+                          ],
                         ),
-                        SegmentTab(
-                          label: 'Trending',
-                          selectedTextColor: AppColors.blueTextStory,
-                          splashColor: Colors.transparent,
+                        Expanded(
+                          child: TabBarView(
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              ForYouPage(),
+                              TrendingPage(),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          ForYouPage(),
-                          TrendingPage(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  //BottomPlayer(),
+                ],
               ),
             ),
           ],

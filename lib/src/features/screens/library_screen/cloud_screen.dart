@@ -7,14 +7,14 @@ import 'pages/artists.dart';
 import 'pages/cloud.dart';
 import 'pages/your_albums.dart';
 
-class Library extends StatefulWidget {
-  const Library({super.key});
+class LibraryScreen extends StatefulWidget {
+  const LibraryScreen({super.key});
 
   @override
-  State<Library> createState() => _LibraryState();
+  State<LibraryScreen> createState() => _LibraryState();
 }
 
-class _LibraryState extends State<Library> {
+class _LibraryState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

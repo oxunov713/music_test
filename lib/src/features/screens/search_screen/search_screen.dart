@@ -33,7 +33,7 @@ class SearchScreen extends StatelessWidget {
                   hintText: 'Search music,artist,podcasts,albums...',
                   hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.grey800,
-                        fontFamily: FontFamily.Exo2?.fFamily,
+                        fontFamily: FontFamily.Exo2.fFamily,
                       ),
                   fillColor: AppColors.white,
                   filled: true,

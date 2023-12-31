@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/providers/home_screen_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../common/styles/app_colors.dart';
 import '../../../../common/tools/fonts.dart';
 import '../widgets/mix_card.dart';
 
-class ForYouPage extends StatelessWidget {
-  final List<Color> _colors = [
-    AppColors.red,
-    AppColors.green,
-    AppColors.blue,
-    AppColors.pink,
-    AppColors.orange,
-    AppColors.deepPurple,
-  ];
+class ForYouPage extends StatefulWidget {
+  @override
+  State<ForYouPage> createState() => _ForYouPageState();
+}
+
+class _ForYouPageState extends State<ForYouPage> {
+  late HomeScreenViewModel viewModelWatch;
+  late HomeScreenViewModel viewModelRead;
+
+  @override
+  void didChangeDependencies() {
+    viewModelWatch = context.watch<HomeScreenViewModel>();
+    viewModelRead = context.read<HomeScreenViewModel>();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +53,9 @@ class ForYouPage extends StatelessWidget {
                     return SizedBox.square(
                       dimension: 100,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const DecoratedBox(
+                          DecoratedBox(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
@@ -60,10 +69,16 @@ class ForYouPage extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(3),
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://biographe.ru/wp-content/uploads/2021/05/34234342.jpg"),
-                                radius: 30,
+                              child: GestureDetector(
+                                onTap: () {
+                                  viewModelRead.changeCurrent(
+                                      viewModelRead.gridUrls[index]);
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      viewModelRead.gridUrls[index]),
+                                  radius: 30,
+                                ),
                               ),
                             ),
                           ),
@@ -114,12 +129,20 @@ class ForYouPage extends StatelessWidget {
                 mainAxisSpacing: 15,
               ),
               delegate: SliverChildBuilderDelegate(
-                (context, index) => MixCard(
-                  artistName: "Billie,Zivert,Inna etc.",
-                  imagePath:
-                      "https://yt3.googleusercontent.com/7Yn4iyqLwXrYUk24EYEOUciGEBwuEJpFp4ABj3blSeh_zvWDD46XW3EwaByEhVghr3eVrmTmoA=s900-c-k-c0x00ffffff-no-rj",
-                  mixTitle: "Mix ${index + 1}",
-                  color: _colors[index],
+                (context, index) => GestureDetector(
+                  onTap: () {
+                    viewModelRead.currentMix = index;
+                    viewModelRead.currentMixArtist =
+                        viewModelRead.artisMix[index];
+
+                    Navigator.pushNamed(context, "/mix_page");
+                  },
+                  child: MixCard(
+                    artistName: viewModelWatch.artisMix[index],
+                    imagePath: viewModelWatch.gridUrls[index],
+                    mixTitle: "Mix ${index + 1}",
+                    color: viewModelWatch.colors[index],
+                  ),
                 ),
                 childCount: 6,
               ),
@@ -143,11 +166,13 @@ class ForYouPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return ListTile(
+                  onTap: () =>  viewModelRead.changeCurrent(
+                      viewModelRead.gridUrls[index]),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  leading: const CircleAvatar(
+                  leading: CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage(
-                        "https://lastfm.freetls.fastly.net/i/u/500x500/fdabed0714898fbf164ecfa0bcfa6ee7.jpg"),
+                    backgroundImage:
+                        NetworkImage(viewModelWatch.gridUrls[index]),
                   ),
                   title: Text(
                     "Mockinbird ",
@@ -196,14 +221,18 @@ class ForYouPage extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, "/artists"),
+                      onTap: () {
+                        viewModelRead.currentSingerImage =
+                            viewModelRead.gridUrls[index];
+                        Navigator.pushNamed(context, "/artists");
+                      },
                       child: SizedBox.square(
                         dimension: 120,
                         child: Column(
                           children: [
-                            const CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://cdn.xabardor.uz/media/photo/2023/04/27/news_photo-20230501-171318.webp"),
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(viewModelRead.gridUrls[index]),
                               radius: 45,
                             ),
                             Text(

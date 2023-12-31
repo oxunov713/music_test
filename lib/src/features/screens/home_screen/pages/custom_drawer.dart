@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/styles/app_colors.dart';
 import '../../../../common/tools/fonts.dart';
-import '../widgets/custom_listtile.dart';
+import '../widgets/custom_list_tile.dart';
 import '../widgets/profile_picture.dart';
 
 class CustomDrawerProfile extends StatefulWidget {

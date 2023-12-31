@@ -1,32 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:music_test/src/features/screens/pages/bottom_player.dart';
 
-import '../../../../common/styles/app_colors.dart';
-import '../../library_screen/cloud_screen.dart';
-import '../../search_screen/search_screen.dart';
-import '../home_screen.dart';
+import '../../common/styles/app_colors.dart';
+import 'library_screen/cloud_screen.dart';
+import 'search_screen/search_screen.dart';
+import 'home_screen/home_screen.dart';
 
-class CustomBottombar extends StatefulWidget {
-  const CustomBottombar({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  _CustomBottombarState createState() => _CustomBottombarState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _CustomBottombarState extends State<CustomBottombar> {
+class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
     HomeScreen(),
     SearchScreen(),
-    Library(),
+    LibraryScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages.elementAt(_currentIndex),
+      body: Stack(
+        children: [
+          _pages.elementAt(_currentIndex),
+          BottomPlayer(),
+        ],
+      ),
       bottomNavigationBar: Container(
         color: Colors.transparent,
         child: BottomNavigationBar(
