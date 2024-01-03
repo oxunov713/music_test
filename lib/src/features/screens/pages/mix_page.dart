@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/models/fake_data.dart';
 import 'package:music_test/src/data/providers/home_screen_provider.dart';
 import 'package:music_test/src/features/screens/pages/bottom_player.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,8 @@ class _MixPageState extends State<MixPage> {
 
   late HomeScreenViewModel viewModelWatch;
   late HomeScreenViewModel viewModelRead;
+
+  final fakeData = FakeData();
 
   @override
   void didChangeDependencies() {
@@ -60,15 +63,15 @@ class _MixPageState extends State<MixPage> {
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,
                     ),
-                    itemCount: viewModelWatch.gridUrls.length,
+                    itemCount: 4,
                     itemBuilder: (context, index) {
                       return CustomCached(
-                        url: viewModelWatch.gridUrls[index],
+                        url: fakeData.gridUrls[index],
                       );
                     },
                   ),
                   title: Text(
-                    'Mix ${viewModelWatch.currentMix + 1}',
+                    'Mix ${viewModelWatch.currentMixNumber + 1}',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontFamily: FontFamily.Jost.fFamily,
                           color: AppColors.white,
@@ -90,7 +93,7 @@ class _MixPageState extends State<MixPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${viewModelWatch.currentMixArtist}\n",
+                              "${viewModelWatch.currentMixArtists}\n",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium

@@ -80,7 +80,7 @@ class _PlayerState extends State<Player> {
           children: [
             SizedBox(height: 60),
             CachedNetworkImage(
-              imageUrl: hviewModelWatch.currentImage,
+              imageUrl: hviewModelWatch.currentMusicImage,
               imageBuilder: (context, imageProvider) => Container(
                 width: double.infinity,
                 height: 350,
@@ -111,7 +111,7 @@ class _PlayerState extends State<Player> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Bu aksam olurum",
+                      "${hviewModelWatch.currentMusicName}",
                       style:
                           Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 fontFamily: FontFamily.Jost.fFamily,
@@ -121,7 +121,7 @@ class _PlayerState extends State<Player> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "Nahide Babasli",
+                      "${hviewModelWatch.currentSinger}",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontFamily: FontFamily.JosefinSans.fFamily,
                             color: AppColors.orange,
@@ -146,26 +146,29 @@ class _PlayerState extends State<Player> {
             ),
             SizedBox(height: 25),
             StreamBuilder(
-              stream: player.positionStream,
-              builder: (context, snapshot) {
-                return ProgressBar(
-                  timeLabelTextStyle: TextStyle(
-                      color: AppColors.white,
-                      fontFamily: FontFamily.Rubik.fFamily),
-                  barHeight: 5,
-                  barCapShape: BarCapShape.round,
-                  timeLabelPadding: 7,
-                  baseBarColor: AppColors.white80,
-                  progressBarColor: AppColors.blue50,
-                  thumbColor: AppColors.blue50,
-                  thumbRadius: 10,
-                  thumbGlowRadius: 0,
-                  progress: Duration(seconds: 50),
-                  total: Duration(seconds: 200),
-                  onSeek: (duration) {},
-                );
-              },
-            ),
+                stream: player.durationStream,
+                builder: (context, snapshot) {
+                  print('Snapshot data: ${snapshot.data}');
+                  print('Player state: ${player.playerState}');
+
+                  return ProgressBar(
+                    key: ValueKey<int>(snapshot.data?.hashCode ?? 0),
+                    timeLabelTextStyle: TextStyle(
+                        color: AppColors.white,
+                        fontFamily: FontFamily.Rubik.fFamily),
+                    barHeight: 5,
+                    barCapShape: BarCapShape.round,
+                    timeLabelPadding: 7,
+                    baseBarColor: AppColors.white80,
+                    progressBarColor: AppColors.blue50,
+                    thumbColor: AppColors.blue50,
+                    thumbRadius: 10,
+                    thumbGlowRadius: 0,
+                    progress: snapshot.data ?? Duration.zero,
+                    total: pviewModelWatch.currentDuration ?? Duration.zero,
+                    onSeek: (duration) {},
+                  );
+                }),
             SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,7 +187,7 @@ class _PlayerState extends State<Player> {
                         MaterialStateProperty.all(AppColors.purpleStory),
                   ),
                   onPressed: () {
-                    pviewModelRead.playPause();
+                    pviewModelRead.resumePauseMusic();
                   },
                   child: Icon(
                     pviewModelWatch.isPlaying

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/models/fake_data.dart';
 import 'package:music_test/src/data/providers/home_screen_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -20,6 +21,8 @@ class _ArtistsState extends State<Artists> {
   bool isFollow = false;
   late HomeScreenViewModel homeRead;
   late HomeScreenViewModel homeWatch;
+
+  final fakeData = FakeData();
 
   @override
   void didChangeDependencies() {
@@ -46,7 +49,7 @@ class _ArtistsState extends State<Artists> {
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: false,
                   background: CachedNetworkImage(
-                    imageUrl: homeWatch.currentSingerImage,
+                    imageUrl: homeWatch.currentSingerCardImage,
                     imageBuilder: (context, imageProvider) => Container(
                       width: 45,
                       height: 45,
@@ -70,8 +73,8 @@ class _ArtistsState extends State<Artists> {
                         const Icon(Icons.error),
                   ),
                   title: Text(
-                    'Ed Sheeran',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    '${homeWatch.currentSingerCardName}',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontFamily: FontFamily.Jost.fFamily,
                           color: AppColors.white,
                         ),
@@ -79,6 +82,13 @@ class _ArtistsState extends State<Artists> {
                   expandedTitleScale: 2,
                   collapseMode: CollapseMode.parallax,
                 ),
+                actionsIconTheme: IconThemeData(color: AppColors.white),
+                actions: [
+                  PopupMenuButton(
+                    iconSize: 25,
+                    itemBuilder: (context) => <PopupMenuEntry>[],
+                  ),
+                ],
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -146,76 +156,89 @@ class _ArtistsState extends State<Artists> {
                   ),
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 20,
-                  (context, index) => ListTile(
-                    onTap: () => homeRead.changeCurrent(homeWatch.currentImage),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: CachedNetworkImage(
-                        imageUrl: homeWatch.currentImage,
-                        imageBuilder: (context, imageProvider) => Container(
-                          width: 45,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey[700]!,
-                          highlightColor: Colors.grey[500]!,
-                          child: Container(
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 80),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: 20,
+                    (context, index) => ListTile(
+                      onTap: () {
+                        homeRead
+                          ..changeCurrentMusicName(
+                              fakeData.artists.values.elementAt(index)[2])
+                          ..changeCurrentMusicImage(fakeData.gridUrls[index])
+                          ..changeCurrentSinger(
+                              fakeData.artists.keys.elementAt(index));
+                      },
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 5),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: CachedNetworkImage(
+                          imageUrl: fakeData.gridUrls[index],
+                          imageBuilder: (context, imageProvider) => Container(
                             width: 45,
                             height: 45,
-                            color: Colors.white,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                    title: Text(
-                      "Photgraph",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontFamily: FontFamily.Montserrat.fFamily,
-                            color: AppColors.white,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                    ),
-                    subtitle: Text(
-                      "Ed Sheeran",
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontFamily: FontFamily.JosefinSans.fFamily,
-                            color: AppColors.white,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                    ),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {});
-                              isSaved = !isSaved;
-                            },
-                            icon: Icon(
-                              isSaved ? Icons.bookmark_border : Icons.bookmark,
-                              size: 25,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                          PopupMenuButton(
-                            iconSize: 25,
-                            itemBuilder: (context) => <PopupMenuEntry>[],
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey[700]!,
+                            highlightColor: Colors.grey[500]!,
+                            child: Container(
+                              width: 45,
+                              height: 45,
+                              color: Colors.white,
+                            ),
                           ),
-                        ],
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                      title: Text(
+                        "${fakeData.artists.values.elementAt(index)[2]}",
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontFamily: FontFamily.Montserrat.fFamily,
+                                  color: AppColors.white,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                      ),
+                      subtitle: Text(
+                        "${fakeData.artists.keys.elementAt(index)}",
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontFamily: FontFamily.JosefinSans.fFamily,
+                              color: AppColors.white,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                      ),
+                      trailing: SizedBox(
+                        width: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                setState(() {});
+                                isSaved = !isSaved;
+                              },
+                              icon: Icon(
+                                isSaved
+                                    ? Icons.bookmark_border
+                                    : Icons.bookmark,
+                                size: 25,
+                              ),
+                            ),
+                            PopupMenuButton(
+                              iconSize: 25,
+                              itemBuilder: (context) => <PopupMenuEntry>[],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

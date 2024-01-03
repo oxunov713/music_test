@@ -62,7 +62,7 @@ class _BottomPlayerState extends State<BottomPlayer> {
                 Row(
                   children: [
                     CachedNetworkImage(
-                      imageUrl: hviewModelWatch.currentImage,
+                      imageUrl: hviewModelWatch.currentMusicImage,
                       imageBuilder: (context, imageProvider) => Container(
                         width: 60,
                         height: 60,
@@ -83,32 +83,38 @@ class _BottomPlayerState extends State<BottomPlayer> {
                           color: Colors.white,
                         ),
                       ),
-
                     ),
                     SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Bu aksam olurum",
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontFamily: FontFamily.Jost.fFamily,
-                                    color: AppColors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                        ),
-                        Text(
-                          "Nahide Babasli",
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontFamily: FontFamily.JosefinSans.fFamily,
-                                    color: AppColors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                        ),
-                      ],
+                    SizedBox(
+                      width: 170,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${hviewModelWatch.currentMusicName}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontFamily: FontFamily.Jost.fFamily,
+                                  color: AppColors.white,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          ),
+                          Text(
+                            "${hviewModelWatch.currentSinger}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                  fontFamily: FontFamily.JosefinSans.fFamily,
+                                  color: AppColors.white,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -116,7 +122,7 @@ class _BottomPlayerState extends State<BottomPlayer> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        pviewModelRead.playPause();
+                        pviewModelRead.resumePauseMusic();
                       },
                       icon: Icon(
                         pviewModelWatch.isPlaying

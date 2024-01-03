@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
 
       endDrawer: CustomDrawerProfile(),
       body: Padding(
-        padding: EdgeInsets.only(right: 10, left: 10, top: 40),
+        padding: EdgeInsets.only(right: 10, left: 10, top: 40,bottom: 80),
         child: Column(
           children: [
             CustomAppBar(),
