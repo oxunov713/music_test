@@ -1,15 +1,17 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../../common/styles/app_colors.dart';
 
 class FakeData {
   final List<Color> colors = [
-    AppColors.red,
-    AppColors.green,
-    AppColors.pink,
-    AppColors.blue,
-    AppColors.orange,
-    AppColors.deepPurple,
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
+    Colors.yellow,
   ];
 
   final List<String> gridUrls = [
@@ -18,29 +20,31 @@ class FakeData {
     "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
     "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
     "https://i1.sndcdn.com/artworks-000471180375-2xomqi-t500x500.jpg",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
-    "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
-    "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
-    "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk7bYad0t6HNYbtpXqb9nJJeGah__f3zOLkA&usqp=CAU",
     "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://s.france24.com/media/display/78bad01c-0766-11e9-bc4f-005056a964fe/w:1280/p:4x3/dua_lipa.jpg",
-    "https://avatars.yandex.net/get-music-content/149669/858fd8b9.a.5943699-2/m1000x1000",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
+    "https://i1.sndcdn.com/artworks-000471180375-2xomqi-t500x500.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk7bYad0t6HNYbtpXqb9nJJeGah__f3zOLkA&usqp=CAU",
     "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://s.france24.com/media/display/78bad01c-0766-11e9-bc4f-005056a964fe/w:1280/p:4x3/dua_lipa.jpg",
-    "https://avatars.yandex.net/get-music-content/149669/858fd8b9.a.5943699-2/m1000x1000",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
-    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
+    "https://i1.sndcdn.com/artworks-000471180375-2xomqi-t500x500.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk7bYad0t6HNYbtpXqb9nJJeGah__f3zOLkA&usqp=CAU",
     "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
     "https://s.france24.com/media/display/78bad01c-0766-11e9-bc4f-005056a964fe/w:1280/p:4x3/dua_lipa.jpg",
-    "https://avatars.yandex.net/get-music-content/149669/858fd8b9.a.5943699-2/m1000x1000",
+    "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
+    "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
+    "https://i1.sndcdn.com/artworks-000471180375-2xomqi-t500x500.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk7bYad0t6HNYbtpXqb9nJJeGah__f3zOLkA&usqp=CAU",
+    "https://cdns-images.dzcdn.net/images/cover/fe7c10dfecd4ece5be97bc263cf0aea8/264x264.jpg",
+    "https://s.france24.com/media/display/78bad01c-0766-11e9-bc4f-005056a964fe/w:1280/p:4x3/dua_lipa.jpg",
+    "https://www.instyle.com/thmb/8udgopWlmIZyeO0fHI6XZljiAk4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/taylor-swift-b6517c5c730d48a1a3d66d47d542236f.jpg",
+    "https://mp3sepet.com/files/images/538/nahide-babasli-istanbul-uyurken.jpg",
+    "https://i1.sndcdn.com/artworks-000471180375-2xomqi-t500x500.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk7bYad0t6HNYbtpXqb9nJJeGah__f3zOLkA&usqp=CAU",
   ];
 
   final Map<String, List<String>> artists = {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_test/src/data/providers/player_provider.dart';
+import 'package:music_test/src/data/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'src/app.dart';
@@ -13,6 +14,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => HomeScreenViewModel()),
         ChangeNotifierProvider(create: (_) => PlayerViewModel()),
         ChangeNotifierProvider(create: (_) => GreatingViewModel()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     ),

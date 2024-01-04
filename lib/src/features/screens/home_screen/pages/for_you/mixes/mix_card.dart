@@ -1,15 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:music_test/src/common/styles/app_colors.dart';
-import 'package:music_test/src/data/models/fake_data.dart';
+import 'dart:ui';
 
-import '../../../../common/tools/fonts.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../../../common/styles/app_colors.dart';
+import '../../../../../../common/tools/fonts.dart';
+import '../../../../../../data/models/fake_data.dart';
 import 'mix_cache_image.dart';
 
 class MixCard extends StatelessWidget {
   final String imagePath;
   final String mixTitle;
   final String artistName;
-  final Color color;
+
   final int index;
   final fakeData = FakeData();
 
@@ -18,7 +20,6 @@ class MixCard extends StatelessWidget {
     required this.imagePath,
     required this.mixTitle,
     required this.artistName,
-    required this.color,
     required this.index,
   }) : super(key: key);
 
@@ -27,42 +28,52 @@ class MixCard extends StatelessWidget {
     return Container(
       width: 140,
       decoration: BoxDecoration(
-        color: AppColors.grey800,
+        border: Border.all(color: AppColors.blue, width: 2),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color, width: 2),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(fakeData.gridUrls[index]),
+        ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            height: 120,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: BackdropFilter(blendMode: BlendMode.srcIn,
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: 120,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomCached(url: fakeData.gridUrls[index]),
-                    CustomCached(url: fakeData.gridUrls[index + 1]),
+                    Column(
+                      children: [
+                        CustomCached(url: fakeData.gridUrls[index]),
+                        CustomCached(url: fakeData.gridUrls[index + 1]),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        CustomCached(url: fakeData.gridUrls[index + 2]),
+                        CustomCached(url: fakeData.gridUrls[index + 3]),
+                      ],
+                    ),
                   ],
                 ),
-                Column(
-                  children: [
-                    CustomCached(url: fakeData.gridUrls[index + 2]),
-                    CustomCached(url: fakeData.gridUrls[index + 3]),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              Text(
+                mixTitle,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontFamily: FontFamily.JosefinSans.fFamily,
+                      color: fakeData.colors[index],
+                      overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeight.bold
+                    ),
+              ),
+            ],
           ),
-          Text(
-            mixTitle,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontFamily: FontFamily.JosefinSans.fFamily,
-                  color: color,
-                  overflow: TextOverflow.ellipsis,
-                ),
-          ),
-        ],
+        ),
       ),
     );
   }

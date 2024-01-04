@@ -46,7 +46,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         ),
                         children: [
                           TextSpan(
-                            text: "\nDõppi Music",
+                            text: "\nSonic Vibe",
                             style: TextStyle(
                               fontFamily: FontFamily.Jost.fFamily,
                               fontWeight: FontWeight.w600,

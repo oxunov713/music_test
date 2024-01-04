@@ -34,7 +34,7 @@ class _ArtistsState extends State<Artists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
+
       body: Stack(
         children: [
           CustomScrollView(

@@ -4,9 +4,9 @@ import 'package:music_test/src/data/models/fake_data.dart';
 import 'package:music_test/src/features/screens/home_screen/widgets/artist_card.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../common/styles/app_colors.dart';
-import '../../../../common/tools/fonts.dart';
-import '../../../../data/providers/home_screen_provider.dart';
+import '../../../../../common/styles/app_colors.dart';
+import '../../../../../common/tools/fonts.dart';
+import '../../../../../data/providers/home_screen_provider.dart';
 
 class TrendingPage extends StatefulWidget {
   const TrendingPage({super.key});
@@ -31,7 +31,7 @@ class _TrendingPageState extends State<TrendingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
+
       body: CustomScrollView(
         slivers: [
           //Random music

@@ -8,7 +8,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
-import '../home_screen/widgets/mix_cache_image.dart';
+import '../home_screen/pages/for_you/mixes/mix_cache_image.dart';
 
 class MixPage extends StatefulWidget {
   const MixPage({super.key});
@@ -36,7 +36,7 @@ class _MixPageState extends State<MixPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
+
       body: Stack(
         children: [
           CustomScrollView(

@@ -11,7 +11,6 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
       resizeToAvoidBottomInset: true,
       body: Padding(
         padding: EdgeInsets.only(right: 10, left: 10, top: 40),
@@ -20,9 +19,7 @@ class SearchScreen extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               child: TextField(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.white,
-                    ),
+                style: Theme.of(context).textTheme.bodyMedium,
                 onChanged: (value) {
                   print(value);
                 },

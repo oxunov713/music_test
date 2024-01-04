@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../common/styles/app_colors.dart';
-import '../../../../common/tools/fonts.dart';
-import '../widgets/custom_list_tile.dart';
-import '../widgets/profile_picture.dart';
+import '../../../../../common/styles/app_colors.dart';
+import '../../../../../common/tools/fonts.dart';
+import '../../widgets/custom_list_tile.dart';
+import '../../widgets/profile_picture.dart';
 
 class CustomDrawerProfile extends StatefulWidget {
   CustomDrawerProfile({super.key});
@@ -14,7 +16,15 @@ class CustomDrawerProfile extends StatefulWidget {
 }
 
 class _CustomDrawerProfileState extends State<CustomDrawerProfile> {
-  bool themeBool = true;
+  late ThemeProvider viewModelRead;
+  late ThemeProvider viewModelWatch;
+
+  @override
+  void didChangeDependencies() {
+    viewModelRead = context.read<ThemeProvider>();
+    viewModelWatch = context.watch<ThemeProvider>();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +52,7 @@ class _CustomDrawerProfileState extends State<CustomDrawerProfile> {
             function: () {},
           ),
           SwitchListTile(
-            value: themeBool,
+            value: viewModelWatch.darkMode,
             title: Text(
               "Theme",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -59,8 +69,7 @@ class _CustomDrawerProfileState extends State<CustomDrawerProfile> {
             ),
             activeTrackColor: AppColors.blue80,
             onChanged: (value) {
-              themeBool = !themeBool;
-              setState(() {});
+              viewModelRead.changeTheme();
             },
           ),
 

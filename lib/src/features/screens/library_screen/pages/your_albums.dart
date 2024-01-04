@@ -9,7 +9,7 @@ class LibraryAlbums extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
+
       body: ListView.builder(
         itemBuilder: (context, index) => ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),

@@ -33,46 +33,35 @@ class _MainScreenState extends State<MainScreen> {
           BottomPlayer(),
         ],
       ),
-      bottomNavigationBar: Container(
-        color: Colors.transparent,
-        child: BottomNavigationBar(
-          backgroundColor: AppColors.dark,
-          unselectedItemColor: AppColors.white80,
-          fixedColor: AppColors.blueTextStory,
-          items: [
-            BottomNavigationBarItem(
-              icon: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  _currentIndex == 0
-                      ? AppColors.blueTextStory
-                      : AppColors.white80,
-                  BlendMode.srcIn,
-                ),
-                child: SvgPicture.asset(
-                  "assets/icons/home.svg",
-                  height: _currentIndex == 0 ? 28 : 26,
-                ),
-              ),
-              label: "Home",
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/icons/home.svg",
+              height: _currentIndex == 0 ? 28 : 26,
+              color: _currentIndex == 0
+                  ? AppColors.blueTextStory
+                  : Theme.of(context).iconTheme.color,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.search,
-                  size: (_currentIndex == 1) ? 28 : 26),
-              label: "Search",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_music_outlined,
-                  size: (_currentIndex == 2) ? 28 : 26),
-              label: "Library",
-            ),
-          ],
-          currentIndex: _currentIndex,
-          onTap: (value) {
-            setState(() {
-              _currentIndex = value;
-            });
-          },
-        ),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.search,
+                size: (_currentIndex == 1) ? 28 : 26),
+            label: "Search",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_music_outlined,
+                size: (_currentIndex == 2) ? 28 : 26),
+            label: "Library",
+          ),
+        ],
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
       ),
     );
   }

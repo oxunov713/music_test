@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
 import 'pages/artists.dart';
@@ -18,10 +17,8 @@ class _LibraryState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length:3,
-
+      length: 3,
       child: Scaffold(
-        backgroundColor: AppColors.dark,
         appBar: AppBar(
           bottom: TabBar(
             labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -44,7 +41,7 @@ class _LibraryState extends State<LibraryScreen> {
                   color: AppColors.blue,
                 ),
           ),
-          backgroundColor: AppColors.dark,
+
           automaticallyImplyLeading: false,
         ),
         body: TabBarView(children: [

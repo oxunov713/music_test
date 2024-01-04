@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'features/screens/pages/mix_page.dart';
 import 'features/screens/pages/artists.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Do'ppi music",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: context.watch<ThemeProvider>().themeData,
       routes: {
         '/': (context) => MainScreen(),
         '/signup': (context) => SignUp(),
