@@ -154,28 +154,29 @@ class _ForYouPageState extends State<ForYouPage> {
           //Mixes widgets
           SliverPadding(
             padding: const EdgeInsets.only(top: 15, left: 10),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 15,
-                childAspectRatio: 0.7,
-                mainAxisSpacing: 15,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => GestureDetector(
-                  onTap: () {
-                    viewModelRead.currentMixNumber = index;
-                    viewModelRead.changeCurrentMixArtists(index);
-                    Navigator.pushNamed(context, "/mix_page");
-                  },
-                  child: MixCard(
-                    artistName: viewModelRead.changeCurrentMixArtists(index),
-                    imagePath: fakeData.gridUrls[index],
-                    mixTitle: "Mix ${index + 1}",
-                    color: fakeData.colors[index],
-                  ),
-                ),
-                childCount: 6,
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: 200,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            viewModelRead.currentMixNumber = index;
+                            viewModelRead.changeCurrentMixArtists(index);
+                            Navigator.pushNamed(context, "/mix_page");
+                          },
+                          child: MixCard(
+                            artistName:
+                                viewModelRead.changeCurrentMixArtists(index),
+                            imagePath: fakeData.gridUrls[index],
+                            mixTitle: "Mix ${index + 1}",
+                            color: fakeData.colors[index],
+                            index: index,
+                          ),
+                        ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 10),
+                    itemCount: 6),
               ),
             ),
           ),
@@ -183,12 +184,18 @@ class _ForYouPageState extends State<ForYouPage> {
           SliverPadding(
             padding: const EdgeInsets.only(top: 20, left: 10, bottom: 15),
             sliver: SliverToBoxAdapter(
-              child: Text(
-                "Your top 10 songs",
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontFamily: FontFamily.Jost.fFamily,
-                      color: AppColors.white,
-                    ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Your top songs",
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontFamily: FontFamily.Jost.fFamily,
+                          color: AppColors.white,
+                        ),
+                  ),
+                  SeeMoreButton(function: () {}, text: "Show all"),
+                ],
               ),
             ),
           ),
@@ -222,7 +229,7 @@ class _ForYouPageState extends State<ForYouPage> {
                     "${fakeData.artists.keys.elementAt(index)} ",
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontFamily: FontFamily.JosefinSans.fFamily,
-                          color: AppColors.blueTextStory,
+                          color: AppColors.white80,
                           overflow: TextOverflow.ellipsis,
                         ),
                   ),
