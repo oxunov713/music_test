@@ -66,7 +66,7 @@ class _MixPageState extends State<MixPage> {
                     itemCount: 4,
                     itemBuilder: (context, index) {
                       return CustomCached(
-                        url: fakeData.gridUrls[index],
+                        url: fakeData.musicList[index].urlImage,
                       );
                     },
                   ),

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../data/models/fake_data.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
-import '../../../../../../data/providers/player_provider.dart';
+import '../../../../../../data/providers/player/player_provider.dart';
 
 class YourFavouriteAlbumsSliver extends StatefulWidget {
   const YourFavouriteAlbumsSliver({super.key});
@@ -50,7 +50,7 @@ class _YourFavouriteAlbumsSliverState extends State<YourFavouriteAlbumsSliver> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(fakeData.gridUrls[index]),
+                          image: NetworkImage(fakeData.musicList[index].urlImage),
                         ),
                       ),
                     ),

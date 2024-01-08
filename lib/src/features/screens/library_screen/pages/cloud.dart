@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../common/styles/app_colors.dart';
 import '../../../../common/tools/fonts.dart';
+import '../../../../data/providers/favourite_cloud/favourite_cloud.dart';
 
-class LibraryCloud extends StatelessWidget {
+class LibraryCloud extends StatefulWidget {
   const LibraryCloud({super.key});
+
+  @override
+  State<LibraryCloud> createState() => _LibraryCloudState();
+}
+
+class _LibraryCloudState extends State<LibraryCloud> {
+  late FavouriteCloudViewModel favouriteCloudViewModel;
+
+  @override
+  void didChangeDependencies() {
+    favouriteCloudViewModel = context.read<FavouriteCloudViewModel>();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: ListView.builder(
+      body: favouriteCloudViewModel.isExistCloud
+          ? ListView.builder(
         itemBuilder: (context, index) {
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(4.0),
               child: CachedNetworkImage(
-                imageUrl: "https://estaticos-cdn.prensaiberica.es/clip/6422556a-ec32-4a86-9e6f-8f8e6b575baa_alta-libre-aspect-ratio_default_0.jpg",
+                imageUrl:
+                "${favouriteCloudViewModel.favouriteCloud[index].urlImage}",
                 imageBuilder: (context, imageProvider) => Container(
                   width: 60,
                   height: 60,
@@ -36,14 +52,16 @@ class LibraryCloud extends StatelessWidget {
                   child: Container(
                     width: 60,
                     height: 60,
-                    color: Colors.white,
+
+                    color:AppColors.grey800,
                   ),
                 ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.error),
               ),
             ),
             title: Text(
-              "Mockinbird",
+              "${favouriteCloudViewModel.favouriteCloud[index].songs[0].name}",
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontFamily: FontFamily.JosefinSans.fFamily,
                 color: AppColors.white,
@@ -51,7 +69,7 @@ class LibraryCloud extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              "Eminem",
+              "${favouriteCloudViewModel.favouriteCloud[index].artistName}",
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontFamily: FontFamily.JosefinSans.fFamily,
                 color: AppColors.white,
@@ -59,11 +77,16 @@ class LibraryCloud extends StatelessWidget {
               ),
             ),
             trailing: PopupMenuButton(
-              itemBuilder: (context) => <PopupMenuEntry>[],
+              itemBuilder: (context) => [
+                // Add your PopupMenuItems based on user actions
+              ],
             ),
           );
         },
-        itemCount: 20,
+        itemCount: favouriteCloudViewModel.songsLength,
+      )
+          : Center(
+        child: Text("No music"),
       ),
     );
   }

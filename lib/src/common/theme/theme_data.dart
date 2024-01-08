@@ -8,10 +8,13 @@ class MyAppThemeData {
     brightness: Brightness.light,
     cardColor: AppColors.dark,
     primaryColor: AppColors.orange,
+    primaryIconTheme: IconThemeData(color: AppColors.blue),
     indicatorColor: AppColors.white30,
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(backgroundColor: AppColors.white30),
-    iconTheme: IconThemeData(color: AppColors.grey800),
+    iconTheme: IconThemeData(
+      color: AppColors.grey800,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: AppColors.blueTextStory,
       unselectedItemColor: AppColors.grey800,
@@ -61,6 +64,7 @@ class MyAppThemeData {
     brightness: Brightness.dark,
     cardColor: AppColors.white,
     primaryColor: AppColors.white30,
+    primaryIconTheme: IconThemeData(color: AppColors.blue),
     indicatorColor: AppColors.white80,
     scaffoldBackgroundColor: AppColors.dark,
     iconTheme: IconThemeData(

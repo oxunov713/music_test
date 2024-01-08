@@ -24,9 +24,9 @@ class ArtistCard extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   viewModelRead
-                    ..changeCurrentSingerCardImage(fakeData.gridUrls[index])
+                    ..changeCurrentSingerCardImage(fakeData.musicList[index].urlImage)
                     ..changeCurrentSingeCardName(
-                        fakeData.artists.keys.elementAt(index));
+                        fakeData.musicList[index].artistName);
 
                   Navigator.pushNamed(context, "/artists");
                 },
@@ -35,11 +35,11 @@ class ArtistCard extends StatelessWidget {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(fakeData.gridUrls[index]),
+                        backgroundImage: NetworkImage(fakeData.musicList[index].urlImage),
                         radius: 45,
                       ),
                       Text(
-                        "${fakeData.artists.keys.elementAt(index)}",
+                        "${fakeData.musicList[index].artistName}",
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontFamily: FontFamily.JosefinSans.fFamily,

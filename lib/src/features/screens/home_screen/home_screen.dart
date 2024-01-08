@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/styles/app_colors.dart';
-import '../../../common/tools/fonts.dart';
+import '../pages/bottom_player.dart';
 import 'pages/custom_drawer/custom_drawer.dart';
 import 'pages/for_you/for_you.dart';
 import 'pages/trending/trending.dart';
@@ -19,7 +18,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       endDrawer: CustomDrawerProfile(),
       body: Padding(
-        padding: EdgeInsets.only(right: 10, left: 10, top: 40, bottom: 80),
+        padding: EdgeInsets.only(right: 10, left: 10, top: 40),
         child: Column(
           children: [
             CustomAppBar(),
@@ -65,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  //BottomPlayer(),
+                  BottomPlayer(),
                 ],
               ),
             ),

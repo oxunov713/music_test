@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../data/models/fake_data.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
-import '../../../../../../data/providers/player_provider.dart';
+import '../../../../../../data/providers/player/player_provider.dart';
 import 'mix_card.dart';
 
 class MixesSliver extends StatefulWidget {
@@ -47,7 +47,7 @@ class _MixesSliverState extends State<MixesSliver> {
                     },
                     child: MixCard(
                       artistName: viewModelRead.changeCurrentMixArtists(index),
-                      imagePath: fakeData.gridUrls[index],
+                      imagePath: fakeData.musicList[index].urlImage,
                       mixTitle: "Mix ${index + 1}",
                       index: index,
                     ),

@@ -32,12 +32,13 @@ class MixCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(fakeData.gridUrls[index]),
+          image: NetworkImage(fakeData.musicList[index].urlImage),
         ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: BackdropFilter(blendMode: BlendMode.srcIn,
+        child: BackdropFilter(
+          blendMode: BlendMode.srcIn,
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -49,14 +50,17 @@ class MixCard extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        CustomCached(url: fakeData.gridUrls[index]),
-                        CustomCached(url: fakeData.gridUrls[index + 1]),
+                        CustomCached(url: fakeData.musicList[index].urlImage),
+                        CustomCached(
+                            url: fakeData.musicList[index + 1].urlImage),
                       ],
                     ),
                     Column(
                       children: [
-                        CustomCached(url: fakeData.gridUrls[index + 2]),
-                        CustomCached(url: fakeData.gridUrls[index + 3]),
+                        CustomCached(
+                            url: fakeData.musicList[index + 2].urlImage),
+                        CustomCached(
+                            url: fakeData.musicList[index + 3].urlImage),
                       ],
                     ),
                   ],
@@ -65,11 +69,10 @@ class MixCard extends StatelessWidget {
               Text(
                 mixTitle,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontFamily: FontFamily.JosefinSans.fFamily,
-                      color: fakeData.colors[index],
-                      overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeight.bold
-                    ),
+                    fontFamily: FontFamily.JosefinSans.fFamily,
+                    color: fakeData.colors[index],
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

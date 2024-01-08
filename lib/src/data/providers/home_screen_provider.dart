@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/models/fake_data.dart';
+
+import '../models/fake_data.dart';
 
 class HomeScreenViewModel extends ChangeNotifier {
   final fakeData = FakeData();
 
-  int    currentMixNumber = 0;
+  int currentMixNumber = 0;
 
   String currentMixArtists = '';
   String currentSingerImage = '';
@@ -13,8 +14,7 @@ class HomeScreenViewModel extends ChangeNotifier {
   String currentSingerCardName = '';
   String currentSingerCardImage = '';
 
-  String currentMusicImage =
-      "https://cdn.iticket.uz/event/poster_square/YkyOkiXJZWwX5ZpfW7abQgpCONrWlC1bTjpqWI5h.jpg";
+  String currentMusicImage = "";
 
   changeCurrentMixNumber(int a) {
     currentMixNumber = a;
@@ -22,9 +22,9 @@ class HomeScreenViewModel extends ChangeNotifier {
   }
 
   String changeCurrentMixArtists(int index) {
-    String str1 = fakeData.artists.keys.elementAt(index);
-    String str2 = fakeData.artists.keys.elementAt(index + 1);
-    String str3 = fakeData.artists.keys.elementAt(index + 2);
+    String str1 = fakeData.musicList[index].artistName;
+    String str2 = fakeData.musicList[index + 1].artistName;
+    String str3 = fakeData.musicList[index + 2].artistName;
     return currentMixArtists = str1 + ', ' + str2 + ', ' + str3 + ' etc.';
   }
 
@@ -52,4 +52,6 @@ class HomeScreenViewModel extends ChangeNotifier {
     currentSingerCardName = str;
     notifyListeners();
   }
+
+
 }

@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:music_test/src/features/screens/pages/bottom_player.dart';
 
 import '../../common/styles/app_colors.dart';
-import 'library_screen/cloud_screen.dart';
+import 'home_screen/pages/custom_drawer/custom_drawer.dart';
+import 'library_screen/library_screen.dart';
 import 'search_screen/search_screen.dart';
 import 'home_screen/home_screen.dart';
 
@@ -27,12 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _pages.elementAt(_currentIndex),
-          BottomPlayer(),
-        ],
-      ),
+      body: _pages.elementAt(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(

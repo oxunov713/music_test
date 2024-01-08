@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../common/tools/greating.dart';
+import '../../../common/tools/greating.dart';
 
 class GreatingViewModel extends ChangeNotifier {
   String greating = Greating.goodMorning.greating;

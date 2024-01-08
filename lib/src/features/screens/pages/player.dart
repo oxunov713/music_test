@@ -9,7 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
 import '../../../data/providers/home_screen_provider.dart';
-import '../../../data/providers/player_provider.dart';
+import '../../../data/providers/player/player_provider.dart';
 
 class Player extends StatefulWidget {
   const Player({super.key});
@@ -23,7 +23,6 @@ class _PlayerState extends State<Player> {
   late PlayerViewModel pviewModelRead;
   late HomeScreenViewModel hviewModelWatch;
   late HomeScreenViewModel hviewModelRead;
-  late AudioPlayer player;
 
   @override
   void didChangeDependencies() {
@@ -31,39 +30,29 @@ class _PlayerState extends State<Player> {
     pviewModelRead = context.read<PlayerViewModel>();
     hviewModelWatch = context.watch<HomeScreenViewModel>();
     hviewModelRead = context.read<HomeScreenViewModel>();
-    player = AudioPlayer();
-    super.didChangeDependencies();
-  }
 
-  @override
-  void dispose() {
-    player.dispose();
-    super.dispose();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dark,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.dark,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
-            color: AppColors.white,
           ),
         ),
         centerTitle: true,
         title: Text(
           "Playing now",
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 fontFamily: FontFamily.Jost.fFamily,
               ),
         ),
-        actionsIconTheme: IconThemeData(color: AppColors.white),
         actions: [
           PopupMenuButton(
             iconSize: 25,
@@ -115,7 +104,6 @@ class _PlayerState extends State<Player> {
                       style:
                           Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 fontFamily: FontFamily.Jost.fFamily,
-                                color: AppColors.white,
                                 overflow: TextOverflow.ellipsis,
                               ),
                     ),
@@ -146,27 +134,27 @@ class _PlayerState extends State<Player> {
             ),
             SizedBox(height: 25),
             StreamBuilder(
-                stream: player.durationStream,
+                stream: pviewModelRead.player.onPositionChanged,
                 builder: (context, snapshot) {
-                  print('Snapshot data: ${snapshot.data}');
-                  print('Player state: ${player.playerState}');
-
                   return ProgressBar(
-                    key: ValueKey<int>(snapshot.data?.hashCode ?? 0),
                     timeLabelTextStyle: TextStyle(
-                        color: AppColors.white,
-                        fontFamily: FontFamily.Rubik.fFamily),
+                        fontFamily: FontFamily.Rubik.fFamily,
+                        color: Theme.of(context).cardColor,
+                        fontWeight: FontWeight.bold),
                     barHeight: 5,
                     barCapShape: BarCapShape.round,
                     timeLabelPadding: 7,
-                    baseBarColor: AppColors.white80,
+                    baseBarColor:
+                        Theme.of(context).primaryColor.withOpacity(0.5),
                     progressBarColor: AppColors.blue50,
                     thumbColor: AppColors.blue50,
                     thumbRadius: 10,
                     thumbGlowRadius: 0,
                     progress: snapshot.data ?? Duration.zero,
                     total: pviewModelWatch.currentDuration ?? Duration.zero,
-                    onSeek: (duration) {},
+                    onSeek: (duration) {
+                      pviewModelRead.player.seek(duration);
+                    },
                   );
                 }),
             SizedBox(height: 15),
@@ -178,7 +166,7 @@ class _PlayerState extends State<Player> {
                   icon: Icon(
                     Icons.skip_previous,
                     size: 45,
-                    color: AppColors.white,
+
                   ),
                 ),
                 FilledButton(
@@ -202,7 +190,7 @@ class _PlayerState extends State<Player> {
                   icon: Icon(
                     Icons.skip_next,
                     size: 45,
-                    color: AppColors.white,
+
                   ),
                 ),
               ],

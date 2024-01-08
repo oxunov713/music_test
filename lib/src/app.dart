@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/providers/theme_provider.dart';
+import 'package:music_test/src/common/theme/theme_data.dart';
+import 'package:music_test/src/data/providers/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'features/screens/pages/mix_page.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Do'ppi music",
+      title: "Sonic Vibe",
       debugShowCheckedModeBanner: false,
       theme: context.watch<ThemeProvider>().themeData,
       routes: {

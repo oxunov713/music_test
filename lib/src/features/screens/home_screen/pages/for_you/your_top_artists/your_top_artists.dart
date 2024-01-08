@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text_marquee/text_marquee.dart';
 
-
 import '../../../../../../data/models/fake_data.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
-import '../../../../../../data/providers/player_provider.dart';
+import '../../../../../../data/providers/player/player_provider.dart';
 
 class YourTopArtistsSliver extends StatefulWidget {
   const YourTopArtistsSliver({super.key});
@@ -44,9 +43,10 @@ class _YourTopArtistsSliverState extends State<YourTopArtistsSliver> {
               return GestureDetector(
                 onTap: () {
                   viewModelRead
-                    ..changeCurrentSingerCardImage(fakeData.gridUrls[index])
+                    ..changeCurrentSingerCardImage(
+                        fakeData.musicList[index].urlImage)
                     ..changeCurrentSingeCardName(
-                        fakeData.artists.keys.elementAt(index));
+                        fakeData.musicList[index].artistName);
 
                   Navigator.pushNamed(context, "/artists");
                 },
@@ -55,14 +55,15 @@ class _YourTopArtistsSliverState extends State<YourTopArtistsSliver> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(fakeData.gridUrls[index]),
+                        backgroundImage:
+                            NetworkImage(fakeData.musicList[index].urlImage),
                         radius: 45,
                       ),
                       SizedBox(
                         width: 80,
                         child: Center(
                           child: TextMarquee(
-                            "${fakeData.artists.keys.elementAt(index)}",
+                            "${fakeData.musicList[index].artistName}",
                             spaceSize: 30,
                             rtl: false,
                             delay: Duration(seconds: 1),

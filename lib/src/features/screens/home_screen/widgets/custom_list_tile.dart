@@ -22,17 +22,14 @@ class CustomListTile extends StatelessWidget {
       title: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontFamily: FontFamily.Exo2.fFamily,
-          color: AppColors.white,
-        ),
+              fontFamily: FontFamily.Exo2.fFamily,
+              color: Theme.of(context).cardColor,
+            ),
       ),
       leading: CircleAvatar(
-        backgroundColor: AppColors.blue80,
-        child: Icon(
-          icon,
-          color: AppColors.blue,
-        ),
+        child: Icon(icon),
       ),
+      trailing: Icon(Icons.navigate_next_outlined),
     );
   }
 }

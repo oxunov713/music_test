@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music_test/src/data/models/fake_data.dart';
+import 'package:music_test/src/data/models/model.dart';
 import 'package:music_test/src/data/providers/home_screen_provider.dart';
+import 'package:music_test/src/data/providers/player/player_provider.dart';
+import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -21,20 +24,26 @@ class _ArtistsState extends State<Artists> {
   bool isFollow = false;
   late HomeScreenViewModel homeRead;
   late HomeScreenViewModel homeWatch;
+  late PlayerViewModel playerRead;
+  late PlayerViewModel playerWatch;
+  late RecentlyPlayedProvider recentlyPlayedProvider;
 
   final fakeData = FakeData();
+  late MusicModel model;
 
   @override
   void didChangeDependencies() {
     homeRead = context.read<HomeScreenViewModel>();
     homeWatch = context.watch<HomeScreenViewModel>();
+    playerRead = context.read<PlayerViewModel>();
+    playerWatch = context.watch<PlayerViewModel>();
+    recentlyPlayedProvider = context.watch<RecentlyPlayedProvider>();
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           CustomScrollView(
@@ -165,17 +174,32 @@ class _ArtistsState extends State<Artists> {
                       onTap: () {
                         homeRead
                           ..changeCurrentMusicName(
-                              fakeData.artists.values.elementAt(index)[2])
-                          ..changeCurrentMusicImage(fakeData.gridUrls[index])
+                              fakeData.musicList[index].songs[0].name)
+                          ..changeCurrentMusicImage(
+                              fakeData.musicList[index].urlImage)
                           ..changeCurrentSinger(
-                              fakeData.artists.keys.elementAt(index));
+                              fakeData.musicList[index].artistName);
+                        model = MusicModel(
+                          id: fakeData.musicList[index].id,
+                          artistName: fakeData.musicList[index].artistName,
+                          urlImage: fakeData.musicList[index].urlImage,
+                          songs: [
+                            Song(
+                                id: fakeData.musicList[index].songs[0].id,
+                                name: fakeData.musicList[index].songs[0].name,
+                                url: fakeData.musicList[index].songs[0].url),
+                          ],
+                        );
+                        recentlyPlayedProvider.addSongsToRecently(model);
+                        playerRead
+                            .playMusic(fakeData.musicList[index].songs[0].url);
                       },
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 5),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: CachedNetworkImage(
-                          imageUrl: fakeData.gridUrls[index],
+                          imageUrl: fakeData.musicList[index].urlImage,
                           imageBuilder: (context, imageProvider) => Container(
                             width: 45,
                             height: 45,
@@ -200,7 +224,7 @@ class _ArtistsState extends State<Artists> {
                         ),
                       ),
                       title: Text(
-                        "${fakeData.artists.values.elementAt(index)[2]}",
+                        "${fakeData.musicList[index].songs[0].name}",
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontFamily: FontFamily.Montserrat.fFamily,
@@ -209,7 +233,7 @@ class _ArtistsState extends State<Artists> {
                                 ),
                       ),
                       subtitle: Text(
-                        "${fakeData.artists.keys.elementAt(index)}",
+                        "${fakeData.musicList[index].artistName}",
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontFamily: FontFamily.JosefinSans.fFamily,
                               color: AppColors.white,

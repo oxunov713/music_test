@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'mixes/mixes_sliver.dart';
 import 'mixes/mixes_text.dart';
@@ -21,9 +23,17 @@ class ForYouPage extends StatefulWidget {
 }
 
 class _ForYouPageState extends State<ForYouPage> {
+  late RecentlyPlayedProvider provider;
+
+  @override
+  void didChangeDependencies() {
+    provider = context.watch<RecentlyPlayedProvider>();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
           //recently

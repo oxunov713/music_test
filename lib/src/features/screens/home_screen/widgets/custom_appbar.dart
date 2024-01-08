@@ -1,8 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:music_test/src/common/styles/app_colors.dart';
-import 'package:music_test/src/data/providers/greating_provider.dart';
+import 'package:music_test/src/data/providers/greating/greating_provider.dart';
 import 'package:music_test/src/features/screens/home_screen/widgets/profile_picture.dart';
+import 'package:music_test/src/features/screens/mainscreen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/tools/fonts.dart';

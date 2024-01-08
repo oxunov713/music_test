@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/providers/theme_provider.dart';
+import 'package:music_test/src/data/providers/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../common/styles/app_colors.dart';
@@ -29,21 +29,33 @@ class _CustomDrawerProfileState extends State<CustomDrawerProfile> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.dark,
       child: ListView(
-        padding: EdgeInsets.zero,
         children: [
-          //Avatar
-          const UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/images/background_profile.png"),
               ),
             ),
-            accountName: Text("Jony English"),
-            accountEmail: Text("jonyenglish@example.com"),
-            currentAccountPicture: ProfilePicture(),
+            accountName: Text(
+              "Jony English",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: AppColors.white),
+            ),
+            accountEmail: Text(
+              "jonyenglish@example.com",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: AppColors.white80),
+            ),
+            currentAccountPicture: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: ProfilePicture(),
+            ),
           ),
           //List tile lar
           CustomListTile(
@@ -51,26 +63,25 @@ class _CustomDrawerProfileState extends State<CustomDrawerProfile> {
             icon: Icons.person_outline,
             function: () {},
           ),
-          SwitchListTile(
-            value: viewModelWatch.darkMode,
+          ListTile(
+            leading: CircleAvatar(
+              child: Icon(
+                viewModelWatch.darkMode ? Icons.nights_stay : Icons.sunny,
+              ),
+            ),
             title: Text(
               "Theme",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontFamily: FontFamily.Exo2.fFamily,
-                    color: AppColors.white,
+                    color: Theme.of(context).cardColor,
                   ),
             ),
-            secondary: CircleAvatar(
-              backgroundColor: AppColors.blue80,
-              child: Icon(
-                Icons.sunny,
-                color: AppColors.blue,
-              ),
+            trailing: Switch(
+              value: viewModelWatch.darkMode,
+              onChanged: (value) {
+                viewModelRead.changeTheme();
+              },
             ),
-            activeTrackColor: AppColors.blue80,
-            onChanged: (value) {
-              viewModelRead.changeTheme();
-            },
           ),
 
           CustomListTile(

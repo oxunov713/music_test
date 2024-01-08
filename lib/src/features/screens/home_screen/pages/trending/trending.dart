@@ -133,7 +133,7 @@ class _TrendingPageState extends State<TrendingPage> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(fakeData.gridUrls[index]),
+                                image: NetworkImage(fakeData.musicList[index].urlImage),
                               ),
                             ),
                           ),
