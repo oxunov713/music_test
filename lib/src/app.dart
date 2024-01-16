@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:music_test/src/common/theme/theme_data.dart';
 import 'package:music_test/src/data/providers/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'features/screens/pages/mix_page.dart';
 import 'features/screens/pages/artists.dart';
 import 'features/screens/registration_screen/login_page.dart';
 import 'features/screens/registration_screen/sign_up_page.dart';
@@ -24,7 +22,6 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUp(),
         '/login': (context) => LogInScreen(),
         '/homescreen': (context) => HomeScreen(),
-        '/mix_page': (context) => MixPage(),
         '/artists': (context) => Artists(),
       },
     );

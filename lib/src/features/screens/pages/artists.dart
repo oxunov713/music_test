@@ -4,7 +4,7 @@ import 'package:music_test/src/data/models/fake_data.dart';
 import 'package:music_test/src/data/models/model.dart';
 import 'package:music_test/src/data/providers/home_screen_provider.dart';
 import 'package:music_test/src/data/providers/player/player_provider.dart';
-import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
+import 'package:music_test/src/data/providers/recently/recently_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -29,7 +29,13 @@ class _ArtistsState extends State<Artists> {
   late RecentlyPlayedProvider recentlyPlayedProvider;
 
   final fakeData = FakeData();
-  late MusicModel model;
+
+  Artist getArtistNameBySpecId(int specId) {
+    final _singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return _singer;
+  }
 
   @override
   void didChangeDependencies() {
@@ -58,7 +64,7 @@ class _ArtistsState extends State<Artists> {
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: false,
                   background: CachedNetworkImage(
-                    imageUrl: homeWatch.currentSingerCardImage,
+                    imageUrl: homeWatch.currentSingerCardImage??"",
                     imageBuilder: (context, imageProvider) => Container(
                       width: 45,
                       height: 45,
@@ -174,25 +180,21 @@ class _ArtistsState extends State<Artists> {
                       onTap: () {
                         homeRead
                           ..changeCurrentMusicName(
-                              fakeData.musicList[index].songs[0].name)
+                              fakeData.musicList[index].name)
                           ..changeCurrentMusicImage(
                               fakeData.musicList[index].urlImage)
-                          ..changeCurrentSinger(
-                              fakeData.musicList[index].artistName);
-                        model = MusicModel(
+                          ..changeCurrentSinger(getArtistNameBySpecId(
+                                  fakeData.musicList[index].id)
+                              .artistName);
+                        Song song = Song(
+                          name: fakeData.musicList[index].name,
+                          specId: fakeData.musicList[index].specId,
                           id: fakeData.musicList[index].id,
-                          artistName: fakeData.musicList[index].artistName,
                           urlImage: fakeData.musicList[index].urlImage,
-                          songs: [
-                            Song(
-                                id: fakeData.musicList[index].songs[0].id,
-                                name: fakeData.musicList[index].songs[0].name,
-                                url: fakeData.musicList[index].songs[0].url),
-                          ],
+                          url: fakeData.musicList[index].url,
                         );
-                        recentlyPlayedProvider.addSongsToRecently(model);
-                        playerRead
-                            .playMusic(fakeData.musicList[index].songs[0].url);
+                        recentlyPlayedProvider.addSongToRecently(song);
+                        playerRead.playMusic(fakeData.musicList[index].url);
                       },
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 5),
@@ -224,7 +226,7 @@ class _ArtistsState extends State<Artists> {
                         ),
                       ),
                       title: Text(
-                        "${fakeData.musicList[index].songs[0].name}",
+                        "${fakeData.musicList[index].name}",
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontFamily: FontFamily.Montserrat.fFamily,
@@ -233,7 +235,7 @@ class _ArtistsState extends State<Artists> {
                                 ),
                       ),
                       subtitle: Text(
-                        "${fakeData.musicList[index].artistName}",
+                        "${getArtistNameBySpecId(fakeData.musicList[index].id).artistName}",
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontFamily: FontFamily.JosefinSans.fFamily,
                               color: AppColors.white,

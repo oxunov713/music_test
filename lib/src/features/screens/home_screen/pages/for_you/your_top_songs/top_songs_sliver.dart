@@ -1,5 +1,11 @@
+// ignore_for_file: unused_import
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
+import 'package:music_test/src/data/providers/mixes/mixes_provider.dart';
+import 'package:music_test/src/data/providers/recently/recently_provider.dart';
+import 'package:music_test/src/features/screens/pages/player.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../data/models/fake_data.dart';
@@ -19,6 +25,7 @@ class _YourTopSongsSliverState extends State<YourTopSongsSliver> {
   late HomeScreenViewModel viewModelRead;
   late PlayerViewModel playerRead;
   late PlayerViewModel playerWatch;
+  late MixProvider provider;
   late RecentlyPlayedProvider recentlyPlayedProvider;
   final fakeData = FakeData();
 
@@ -28,8 +35,16 @@ class _YourTopSongsSliverState extends State<YourTopSongsSliver> {
     viewModelRead = context.read<HomeScreenViewModel>();
     playerRead = context.watch<PlayerViewModel>();
     playerWatch = context.read<PlayerViewModel>();
+    provider = context.read<MixProvider>();
     recentlyPlayedProvider = context.read<RecentlyPlayedProvider>();
     super.didChangeDependencies();
+  }
+
+  Artist getArtistNameBySpecId(int specId) {
+    final _singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return _singer;
   }
 
   @override
@@ -37,26 +52,35 @@ class _YourTopSongsSliverState extends State<YourTopSongsSliver> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
+          index = 3 * index;
           return ListTile(
             onTap: () {
-              viewModelRead
-                ..changeCurrentMusicName(
-                    fakeData.musicList[index].songs[1].name)
-                ..changeCurrentMusicImage(fakeData.musicList[index].urlImage)
-                ..changeCurrentSinger(fakeData.musicList[index].artistName);
-              MusicModel model = MusicModel(
-                id: fakeData.musicList[index].id,
-                artistName: fakeData.musicList[index].artistName,
-                urlImage: fakeData.musicList[index].urlImage,
-                songs: [
-                  Song(
-                      id: fakeData.musicList[index].songs[1].id,
-                      name: fakeData.musicList[index].songs[1].name,
-                      url: fakeData.musicList[index].songs[1].url),
-                ],
-              );
-              recentlyPlayedProvider.addSongsToRecently(model);
-              playerRead.playMusic(fakeData.musicList[index].songs[1].url);
+print(fakeData.musicList[index].id);
+print(viewModelWatch.currentMusicId);
+              if (fakeData.musicList[index].id ==
+                  viewModelWatch.currentMusicId) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Player(),
+                    ));
+              } else {
+                viewModelRead
+                  ..changeCurrentMusicName(fakeData.musicList[index].name)
+                  ..changeCurrentMusicImage(fakeData.musicList[index].urlImage)
+                  ..changeCurrentMusicId(fakeData.musicList[index].id)
+                  ..changeCurrentSinger(
+                      getArtistNameBySpecId(fakeData.musicList[index].specId)
+                          .artistName);
+                Song song = Song(
+                    specId: fakeData.musicList[index].specId,
+                    urlImage: fakeData.musicList[index].urlImage,
+                    id: fakeData.musicList[index].id,
+                    name: fakeData.musicList[index].name,
+                    url: fakeData.musicList[index].url);
+                recentlyPlayedProvider.addSongToRecently(song);
+                playerRead.playMusic(fakeData.musicList[index].url);
+              }
             },
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
             leading: CircleAvatar(
@@ -64,11 +88,11 @@ class _YourTopSongsSliverState extends State<YourTopSongsSliver> {
               backgroundImage: NetworkImage(fakeData.musicList[index].urlImage),
             ),
             title: Text(
-              "${fakeData.musicList[index].songs[1].name} ",
+              "${fakeData.musicList[index].name} ",
               style: Theme.of(context).textTheme.titleLarge,
             ),
             subtitle: Text(
-              "${fakeData.musicList[index].artistName} ",
+              "${getArtistNameBySpecId(fakeData.musicList[index].specId).artistName} ",
               style: Theme.of(context).textTheme.titleSmall,
             ),
             trailing: PopupMenuButton(

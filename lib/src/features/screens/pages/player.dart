@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +71,7 @@ class _PlayerState extends State<Player> {
           children: [
             SizedBox(height: 60),
             CachedNetworkImage(
-              imageUrl: hviewModelWatch.currentMusicImage,
+              imageUrl: hviewModelWatch.currentMusicImage ?? "",
               imageBuilder: (context, imageProvider) => Container(
                 width: double.infinity,
                 height: 350,
@@ -166,7 +168,6 @@ class _PlayerState extends State<Player> {
                   icon: Icon(
                     Icons.skip_previous,
                     size: 45,
-
                   ),
                 ),
                 FilledButton(
@@ -190,7 +191,6 @@ class _PlayerState extends State<Player> {
                   icon: Icon(
                     Icons.skip_next,
                     size: 45,
-
                   ),
                 ),
               ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
+import 'package:music_test/src/data/providers/recently/recently_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'mixes/mixes_sliver.dart';

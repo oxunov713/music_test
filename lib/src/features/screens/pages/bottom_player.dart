@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
+import 'package:music_test/src/data/providers/recently/recently_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:text_marquee/text_marquee.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../../../common/tools/fonts.dart';
@@ -38,7 +39,9 @@ class _BottomPlayerState extends State<BottomPlayer> {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: recentlyPlayed.isExistRecently ? GestureDetector(
+      child: (recentlyPlayed.isExistRecently &&
+          hviewModelWatch.currentMusicId != null)
+          ? GestureDetector(
         onTap: () =>
             Navigator.push(
               context,
@@ -65,15 +68,16 @@ class _BottomPlayerState extends State<BottomPlayer> {
               children: [
                 Row(
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: hviewModelWatch.currentMusicImage,
+                    (pviewModelWatch.loadIndicator)
+                        ? CircularProgressIndicator(): CachedNetworkImage(
+                      imageUrl: hviewModelWatch.currentMusicImage ?? "",
                       imageBuilder: (context, imageProvider) =>
                           Container(
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(10)),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10)),
                               image: DecorationImage(
                                 image: imageProvider,
                                 fit: BoxFit.cover,
@@ -92,37 +96,39 @@ class _BottomPlayerState extends State<BottomPlayer> {
                           ),
                     ),
                     SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${hviewModelWatch.currentMusicName}",
-                          style:
-                          Theme
-                              .of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                            fontFamily: FontFamily.Jost.fFamily,
-                            color: AppColors.white,
-                            overflow: TextOverflow.ellipsis,
+                    SizedBox(
+                      width: 150,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextMarquee(
+                            "${hviewModelWatch.currentMusicName}",
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                              fontFamily: FontFamily.Jost.fFamily,
+                              color: AppColors.white,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "${hviewModelWatch.currentSinger}",
-                          style:
-                          Theme
-                              .of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                            fontFamily: FontFamily.JosefinSans.fFamily,
-                            color: AppColors.white,
-                            overflow: TextOverflow.ellipsis,
+                          Text(
+                            "${hviewModelWatch.currentSinger}",
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                              fontFamily:
+                              FontFamily.JosefinSans.fFamily,
+                              color: AppColors.white,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -155,7 +161,8 @@ class _BottomPlayerState extends State<BottomPlayer> {
             ),
           ),
         ),
-      ):null,
+      )
+          : null,
     );
   }
 }

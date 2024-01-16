@@ -1,10 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../../../../../common/styles/app_colors.dart';
+import '../../../../../../common/tools/fonts.dart';
 import '../../../../../../data/models/fake_data.dart';
-import '../../../../../../data/providers/home_screen_provider.dart';
-import '../../../../../../data/providers/player/player_provider.dart';
-import 'mix_card.dart';
+import '../../../../../../data/providers/mixes/mixes_provider.dart';
+import 'mix_cache_image.dart';
+import 'mix_page.dart';
 
 class MixesSliver extends StatefulWidget {
   const MixesSliver({super.key});
@@ -14,19 +16,15 @@ class MixesSliver extends StatefulWidget {
 }
 
 class _MixesSliverState extends State<MixesSliver> {
-  late HomeScreenViewModel viewModelWatch;
-  late HomeScreenViewModel viewModelRead;
-  late PlayerViewModel playerRead;
-  late PlayerViewModel playerWatch;
+  late MixProvider _mixProvider;
+  late MixProvider _mixProviderW;
 
   final fakeData = FakeData();
 
   @override
   void didChangeDependencies() {
-    viewModelWatch = context.watch<HomeScreenViewModel>();
-    viewModelRead = context.read<HomeScreenViewModel>();
-    playerRead = context.watch<PlayerViewModel>();
-    playerWatch = context.read<PlayerViewModel>();
+    _mixProvider = context.read<MixProvider>();
+    _mixProviderW = context.watch<MixProvider>();
     super.didChangeDependencies();
   }
 
@@ -38,22 +36,74 @@ class _MixesSliverState extends State<MixesSliver> {
         child: SizedBox(
           height: 200,
           child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      viewModelRead.currentMixNumber = index;
-                      viewModelRead.changeCurrentMixArtists(index);
-                      Navigator.pushNamed(context, "/mix_page");
-                    },
-                    child: MixCard(
-                      artistName: viewModelRead.changeCurrentMixArtists(index),
-                      imagePath: fakeData.musicList[index].urlImage,
-                      mixTitle: "Mix ${index + 1}",
-                      index: index,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MixPage(
+                        mixIndex: index,
+                      ),
                     ),
+                  );
+                },
+                child: Container(
+                  width: 140,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.blue, width: 2),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-              separatorBuilder: (context, index) => const SizedBox(width: 15),
-              itemCount: 6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 120,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                CustomCached(
+                                    url: _mixProviderW
+                                        .mixArtistsList[index][0].urlImage),
+                                CustomCached(
+                                    url: _mixProviderW
+                                        .mixArtistsList[index][1].urlImage),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                CustomCached(
+                                    url: _mixProviderW
+                                        .mixArtistsList[index][2].urlImage),
+                                CustomCached(
+                                    url: _mixProviderW
+                                        .mixArtistsList[index][3].urlImage),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "Mix ${index + 1}",
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontFamily: FontFamily.JosefinSans.fFamily,
+                                  color: fakeData.colors[index],
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(width: 15),
+            itemCount: 6,
+          ),
         ),
       ),
     );

@@ -1,7 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:music_test/src/data/providers/mixes/mixes_provider.dart';
 import 'package:music_test/src/features/screens/pages/bottom_player.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/styles/app_colors.dart';
 import 'home_screen/pages/custom_drawer/custom_drawer.dart';
@@ -18,7 +22,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-
+  late MixProvider mixProvider;
   final List<Widget> _pages = [
     HomeScreen(),
     SearchScreen(),
@@ -26,7 +30,14 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void didChangeDependencies() {
+    mixProvider = context.read<MixProvider>();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    mixProvider.getMixArtists();
     return Scaffold(
       body: _pages.elementAt(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(

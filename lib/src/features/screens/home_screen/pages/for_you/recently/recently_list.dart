@@ -1,17 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:music_test/src/common/styles/app_colors.dart';
-import 'package:music_test/src/data/providers/recently/recenlt_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../../common/styles/app_colors.dart';
 import '../../../../../../data/models/fake_data.dart';
+import '../../../../../../data/models/model.dart';
 import '../../../../../../data/providers/favourite_cloud/favourite_cloud.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
 import '../../../../../../data/providers/player/player_provider.dart';
+import '../../../../../../data/providers/recently/recently_provider.dart';
 
 class RecentlyList extends StatefulWidget {
-  RecentlyList({super.key});
+  const RecentlyList({super.key});
 
   @override
   State<RecentlyList> createState() => _RecentlyListState();
@@ -36,10 +37,18 @@ class _RecentlyListState extends State<RecentlyList> {
     playerRead = context.watch<PlayerViewModel>();
     playerWatch = context.read<PlayerViewModel>();
     recentlyPlayedProvider = context.read<RecentlyPlayedProvider>();
+    recentlyPlayedProviderW = context.watch<RecentlyPlayedProvider>();
     favouriteCloudViewModelR = context.read<FavouriteCloudViewModel>();
     favouriteCloudViewModelW = context.watch<FavouriteCloudViewModel>();
-    recentlyPlayedProviderW = context.watch<RecentlyPlayedProvider>();
+
     super.didChangeDependencies();
+  }
+
+  Artist getArtistNameBySpecId(int specId) {
+    final singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return singer;
   }
 
   @override
@@ -55,14 +64,17 @@ class _RecentlyListState extends State<RecentlyList> {
                   onTap: () {
                     viewModelRead
                       ..changeCurrentMusicName(
-                          recentlyPlayedProvider.dataBase[index].songs[0].name)
+                          recentlyPlayedProvider.dataBase[index].name)
+                      ..changeCurrentMusicId(
+                          recentlyPlayedProvider.dataBase[index].id)
                       ..changeCurrentMusicImage(
                           recentlyPlayedProvider.dataBase[index].urlImage)
-                      ..changeCurrentSinger(
-                          recentlyPlayedProvider.dataBase[index].artistName);
+                      ..changeCurrentSinger(getArtistNameBySpecId(
+                              recentlyPlayedProvider.dataBase[index].specId)
+                          .artistName);
 
-                    playerRead.playMusic(
-                        recentlyPlayedProvider.dataBase[index].songs[0].url);
+                    playerRead
+                        .playMusic(recentlyPlayedProvider.dataBase[index].url);
                   },
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   leading: ClipRRect(
@@ -93,23 +105,25 @@ class _RecentlyListState extends State<RecentlyList> {
                     ),
                   ),
                   title: Text(
-                    "${recentlyPlayedProvider.dataBase[index].songs.first.name}",
+                    "${recentlyPlayedProvider.dataBase[index].name}",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: (viewModelRead.currentMusicName ==
-                                  recentlyPlayedProvider
-                                      .dataBase[index].songs[0].name)
+                          color: (recentlyPlayedProvider.dataBase[index].id ==
+                                  viewModelWatch.currentMusicId)
                               ? AppColors.green
                               : Theme.of(context).cardColor,
                         ),
                   ),
                   subtitle: Text(
-                    "${recentlyPlayedProvider.dataBase[index].artistName}",
+                    "${getArtistNameBySpecId(recentlyPlayedProvider.dataBase[index].specId).artistName}",
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   trailing: PopupMenuButton(
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        child: ListTile(
+                      PopupMenuItem(
+                        onTap: () {
+                          //TODO recently ni albumga qo'shish
+                        },
+                        child: const ListTile(
                           leading: CircleAvatar(
                             child: Icon(Icons.add_outlined),
                           ),
@@ -121,22 +135,33 @@ class _RecentlyListState extends State<RecentlyList> {
                       ),
                       PopupMenuItem(
                         onTap: () {
-                          bool isSaved = favouriteCloudViewModelW
-                              .isSongInFavorites(recentlyPlayedProvider
-                                  .dataBase[index].songs.first.id);
+                          bool isSaved =
+                              favouriteCloudViewModelW.isSongInFavorites(
+                                  recentlyPlayedProviderW.dataBase[index].id);
 
-                          isSaved
-                              ? favouriteCloudViewModelR
-                                  .removeSongFromFavorites(
-                                      recentlyPlayedProviderW
-                                          .dataBase[index].songs.first.id)
-                              : favouriteCloudViewModelR.addToFavorites(
-                                  recentlyPlayedProviderW.dataBase[index]);
+                          if (isSaved) {
+                            favouriteCloudViewModelR.removeSongFromFavorites(
+                                recentlyPlayedProviderW.dataBase[index].id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 1),
+                                content: Text("Remove from cloud"),
+                              ),
+                            );
+                          } else {
+                            favouriteCloudViewModelR.addToFavorites(
+                                recentlyPlayedProviderW.dataBase[index]);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 1),
+                                content: Text("Added to cloud"),
+                              ),
+                            );
+                          }
                         },
                         child: favouriteCloudViewModelR.isSongInFavorites(
-                                recentlyPlayedProviderW
-                                    .dataBase[index].songs.first.id)
-                            ? ListTile(
+                                recentlyPlayedProviderW.dataBase[index].id)
+                            ? const ListTile(
                                 leading: CircleAvatar(
                                   child: Icon(Icons.bookmark),
                                 ),
@@ -145,7 +170,7 @@ class _RecentlyListState extends State<RecentlyList> {
                                   style: TextStyle(color: AppColors.blue),
                                 ),
                               )
-                            : ListTile(
+                            : const ListTile(
                                 leading: CircleAvatar(
                                   child: Icon(Icons.bookmark_border),
                                 ),
@@ -159,10 +184,13 @@ class _RecentlyListState extends State<RecentlyList> {
                         onTap: () {
                           viewModelRead
                             ..changeCurrentSingerCardImage(
-                                recentlyPlayedProvider.dataBase[index].urlImage)
-                            ..changeCurrentSingeCardName(
-                              recentlyPlayedProvider.dataBase[index].artistName,
-                            );
+                                getArtistNameBySpecId(recentlyPlayedProvider
+                                        .dataBase[index].specId)
+                                    .urlImage)
+                            ..changeCurrentSingeCardName(getArtistNameBySpecId(
+                                    recentlyPlayedProvider
+                                        .dataBase[index].specId)
+                                .artistName);
 
                           Navigator.pushNamed(context, "/artists");
                         },
@@ -179,8 +207,11 @@ class _RecentlyListState extends State<RecentlyList> {
                       PopupMenuItem(
                         onTap: () {
                           recentlyPlayedProvider.removeSongFromRecently(
-                              recentlyPlayedProvider
-                                  .dataBase[index].songs.first.id);
+                              recentlyPlayedProvider.dataBase[index].id);
+                          viewModelRead.changeCurrentMusicId(null);
+                          viewModelRead.changeCurrentMusicName(null);
+                          viewModelRead.changeCurrentMusicImage(null);
+                          playerRead.stopMusic();
                         },
                         child: const ListTile(
                           leading: CircleAvatar(

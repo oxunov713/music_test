@@ -24,7 +24,7 @@ class RecentlyText extends StatelessWidget {
               function: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RecentlyList(),
+                  builder: (context) => const RecentlyList(),
                 ),
               ),
               text: "Show all",

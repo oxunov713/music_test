@@ -4,12 +4,21 @@ import 'package:music_test/src/data/providers/home_screen_provider.dart';
 
 import '../../../../common/styles/app_colors.dart';
 import '../../../../common/tools/fonts.dart';
+import '../../../../data/models/model.dart';
 
 class ArtistCard extends StatelessWidget {
-  const ArtistCard({super.key, required this.viewModelRead, required this.fakeData});
+  const ArtistCard(
+      {super.key, required this.viewModelRead, required this.fakeData});
 
   final HomeScreenViewModel viewModelRead;
   final FakeData fakeData;
+
+  Artist getArtistNameBySpecId(int specId) {
+    final _singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return _singer;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +33,12 @@ class ArtistCard extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   viewModelRead
-                    ..changeCurrentSingerCardImage(fakeData.musicList[index].urlImage)
+                    ..changeCurrentSingerCardImage(
+                        getArtistNameBySpecId(fakeData.musicList[index].id)
+                            .urlImage)
                     ..changeCurrentSingeCardName(
-                        fakeData.musicList[index].artistName);
+                        getArtistNameBySpecId(fakeData.musicList[index].id)
+                            .artistName);
 
                   Navigator.pushNamed(context, "/artists");
                 },
@@ -35,11 +47,12 @@ class ArtistCard extends StatelessWidget {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(fakeData.musicList[index].urlImage),
+                        backgroundImage:
+                            NetworkImage(fakeData.musicList[index].urlImage),
                         radius: 45,
                       ),
                       Text(
-                        "${fakeData.musicList[index].artistName}",
+                        "${getArtistNameBySpecId(fakeData.musicList[index].id).artistName}",
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontFamily: FontFamily.JosefinSans.fFamily,

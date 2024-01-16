@@ -1,12 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:text_marquee/text_marquee.dart';
 
 import '../../../../../../common/styles/app_colors.dart';
 import '../../../../../../data/models/fake_data.dart';
+import '../../../../../../data/models/model.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
 import '../../../../../../data/providers/player/player_provider.dart';
-import '../../../../../../data/providers/recently/recenlt_provider.dart';
+import '../../../../../../data/providers/recently/recently_provider.dart';
 
 class RecentlySliver extends StatefulWidget {
   const RecentlySliver({super.key});
@@ -28,13 +31,20 @@ class _RecentlySliverState extends State<RecentlySliver> {
   int n = 0;
 
   int _itemCount() {
-    int _n = 0;
+    int n = 0;
     if (recentlyPlayedProvider.dataBase.length <= 10) {
-      _n = recentlyPlayedProvider.dataBase.length;
+      n = recentlyPlayedProvider.dataBase.length;
     } else {
-      _n = 10;
+      n = 10;
     }
-    return _n;
+    return n;
+  }
+
+  Artist getArtistNameBySpecId(int specId) {
+    final singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return singer;
   }
 
   @override
@@ -83,22 +93,88 @@ class _RecentlySliverState extends State<RecentlySliver> {
                               child: GestureDetector(
                                 onTap: () {
                                   viewModelRead
+                                    ..changeCurrentMusicId(
+                                        recentlyPlayedProvider
+                                            .dataBase[index].id)
                                     ..changeCurrentMusicName(
                                         recentlyPlayedProvider
-                                            .dataBase[index].songs[0].name)
+                                            .dataBase[index].name)
                                     ..changeCurrentMusicImage(
                                         recentlyPlayedProvider
                                             .dataBase[index].urlImage)
-                                    ..changeCurrentSinger(recentlyPlayedProvider
-                                        .dataBase[index].artistName);
+                                    ..changeCurrentSinger(getArtistNameBySpecId(
+                                            recentlyPlayedProvider
+                                                .dataBase[index].specId)
+                                        .artistName);
 
                                   playerRead.playMusic(recentlyPlayedProvider
-                                      .dataBase[index].songs[0].url);
+                                      .dataBase[index].url);
+                                },
+                                onLongPress: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text(
+                                        "Do you want to delete?",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .cardColor),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            recentlyPlayedProvider
+                                                .removeSongFromRecently(
+                                                    recentlyPlayedProvider
+                                                        .dataBase[index].id);
+                                            viewModelRead
+                                              ..changeCurrentMusicId(null)
+                                              ..changeCurrentMusicName(null)
+                                              ..changeCurrentMusicImage(null);
+                                            playerRead.stopMusic();
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Delete"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: const Text("Back"),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 },
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      "${recentlyPlayedProvider.dataBase[index].urlImage}"),
                                   radius: 35,
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        "${recentlyPlayedProvider.dataBase[index].urlImage}",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        Shimmer.fromColors(
+                                      baseColor: Colors.grey[700]!,
+                                      highlightColor: Colors.grey[500]!,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -107,10 +183,10 @@ class _RecentlySliverState extends State<RecentlySliver> {
                             width: 72,
                             child: Center(
                               child: TextMarquee(
-                                "${recentlyPlayedProvider.dataBase[index].songs[0].name}",
+                                "${recentlyPlayedProvider.dataBase[index].name}",
                                 spaceSize: 30,
                                 rtl: false,
-                                delay: Duration(seconds: 1),
+                                delay: const Duration(seconds: 1),
                                 style: Theme.of(context).textTheme.titleMedium!,
                               ),
                             ),
@@ -125,7 +201,7 @@ class _RecentlySliverState extends State<RecentlySliver> {
                   scrollDirection: Axis.horizontal,
                 ),
               )
-            : Center(
+            : const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

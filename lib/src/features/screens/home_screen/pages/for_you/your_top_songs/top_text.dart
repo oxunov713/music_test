@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/see_more_button.dart';
+import 'top_songs_list.dart';
 
 class YourTopSongsText extends StatelessWidget {
   const YourTopSongsText({super.key});
@@ -18,7 +19,13 @@ class YourTopSongsText extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SeeMoreButton(
-              function: () {},
+              function: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => YourTopSongsList(),
+                    ));
+              },
               text: "Show all",
             ),
           ],

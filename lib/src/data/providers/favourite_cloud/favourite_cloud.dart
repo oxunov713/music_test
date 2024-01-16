@@ -3,58 +3,25 @@ import 'package:flutter/material.dart';
 import '../../models/model.dart';
 
 class FavouriteCloudViewModel extends ChangeNotifier {
-  List<MusicModel> favouriteCloud = [];
-  int songsLength = 0;
+  List<Song> _favouriteCloud = [];
 
-  bool get isExistCloud => favouriteCloud.isNotEmpty;
+  List<Song> get favouriteCloud => _favouriteCloud;
 
-  void addToFavorites(MusicModel currentModel) {
-    bool artistExists =
-        favouriteCloud.any((model) => model.id == currentModel.id);
+  int get songsLength => _favouriteCloud.length;
 
-    if (artistExists) {
-      int artistIndex =
-          favouriteCloud.indexWhere((model) => model.id == currentModel.id);
-      List<Song> existingSongs = favouriteCloud[artistIndex].songs;
+  bool get isExistCloud => _favouriteCloud.isNotEmpty;
 
-      for (var newSong in currentModel.songs) {
-        bool songExists = existingSongs.any((song) => song.id == newSong.id);
-
-        if (!songExists) {
-          favouriteCloud[artistIndex].songs.add(currentModel.songs.first);
-          songsLength++;
-        }
-      }
-    } else {
-      favouriteCloud.add(currentModel);
-      songsLength++;
-    }
-
-    favouriteCloud.sort((a, b) => b.id.compareTo(a.id));
-
+  void addToFavorites(Song song) {
+    _favouriteCloud.add(song);
     notifyListeners();
   }
 
   void removeSongFromFavorites(int songId) {
-    favouriteCloud.forEach((musicModel) {
-      musicModel.songs.removeWhere((song) => song.id == songId);
-      songsLength -= musicModel.songs.length;
-    });
-
-    favouriteCloud.removeWhere((musicModel) => musicModel.songs.isEmpty);
-
+    _favouriteCloud.removeWhere((song) => song.id == songId);
     notifyListeners();
   }
 
-
   bool isSongInFavorites(int songId) {
-    for (var musicModel in favouriteCloud) {
-      for (var song in musicModel.songs) {
-        if (song.id == songId) {
-          return true;
-        }
-      }
-    }
-    return false;
+    return _favouriteCloud.any((song) => song.id == songId);
   }
 }

@@ -12,7 +12,8 @@ class CustomCached extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: url,
       imageBuilder: (context, imageProvider) => Container(
-       height: 60,width: 60,
+        height: 60,
+        width: 60,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: imageProvider,
@@ -24,8 +25,8 @@ class CustomCached extends StatelessWidget {
         baseColor: Colors.grey[700]!,
         highlightColor: Colors.grey[500]!,
         child: Container(
-         width: 50,
-          height: 50,
+          height: 60,
+          width: 60,
           color: Colors.white,
         ),
       ),

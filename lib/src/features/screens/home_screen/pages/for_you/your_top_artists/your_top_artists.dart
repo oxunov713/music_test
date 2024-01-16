@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:text_marquee/text_marquee.dart';
 
 import '../../../../../../data/models/fake_data.dart';
+import '../../../../../../data/models/model.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
 import '../../../../../../data/providers/player/player_provider.dart';
 
@@ -30,6 +31,13 @@ class _YourTopArtistsSliverState extends State<YourTopArtistsSliver> {
     super.didChangeDependencies();
   }
 
+  Artist getArtistNameBySpecId(int specId) {
+    final _singer = fakeData.artists.firstWhere(
+      (song) => song.specId == specId,
+    );
+    return _singer;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
@@ -44,9 +52,11 @@ class _YourTopArtistsSliverState extends State<YourTopArtistsSliver> {
                 onTap: () {
                   viewModelRead
                     ..changeCurrentSingerCardImage(
-                        fakeData.musicList[index].urlImage)
+                        getArtistNameBySpecId(fakeData.artists[index].specId)
+                            .urlImage)
                     ..changeCurrentSingeCardName(
-                        fakeData.musicList[index].artistName);
+                        getArtistNameBySpecId(fakeData.artists[index].specId)
+                            .artistName);
 
                   Navigator.pushNamed(context, "/artists");
                 },
@@ -55,15 +65,16 @@ class _YourTopArtistsSliverState extends State<YourTopArtistsSliver> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(fakeData.musicList[index].urlImage),
+                        backgroundImage: NetworkImage(getArtistNameBySpecId(
+                                fakeData.artists[index].specId)
+                            .urlImage),
                         radius: 45,
                       ),
                       SizedBox(
                         width: 80,
                         child: Center(
                           child: TextMarquee(
-                            "${fakeData.musicList[index].artistName}",
+                            "${fakeData.artists[index].artistName}",
                             spaceSize: 30,
                             rtl: false,
                             delay: Duration(seconds: 1),
