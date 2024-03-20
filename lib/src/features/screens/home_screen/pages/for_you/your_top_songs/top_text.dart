@@ -21,10 +21,11 @@ class YourTopSongsText extends StatelessWidget {
             SeeMoreButton(
               function: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => YourTopSongsList(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => YourTopSongsList(),
+                  ),
+                );
               },
               text: "Show all",
             ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../common/styles/app_colors.dart';
@@ -22,13 +21,6 @@ class _MixesSliverState extends State<MixesSliver> {
   final fakeData = FakeData();
 
   @override
-  void didChangeDependencies() {
-    _mixProvider = context.read<MixProvider>();
-    _mixProviderW = context.watch<MixProvider>();
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.only(top: 15, left: 10),
@@ -38,6 +30,8 @@ class _MixesSliverState extends State<MixesSliver> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
+              _mixProvider = context.read<MixProvider>();
+              _mixProviderW = context.watch<MixProvider>();
               return GestureDetector(
                 onTap: () {
                   Navigator.push(

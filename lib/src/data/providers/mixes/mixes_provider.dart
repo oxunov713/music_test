@@ -36,6 +36,6 @@ class MixProvider extends ChangeNotifier {
       }
     }
 
-    //notifyListeners();
+
   }
 }

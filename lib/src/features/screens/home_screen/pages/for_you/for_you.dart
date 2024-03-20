@@ -23,14 +23,6 @@ class ForYouPage extends StatefulWidget {
 }
 
 class _ForYouPageState extends State<ForYouPage> {
-  late RecentlyPlayedProvider provider;
-
-  @override
-  void didChangeDependencies() {
-    provider = context.watch<RecentlyPlayedProvider>();
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

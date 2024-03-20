@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
+import 'package:music_test/src/data/providers/home_screen_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../pages/bottom_player.dart';
@@ -10,8 +12,21 @@ import 'pages/for_you/for_you.dart';
 import 'pages/trending/trending.dart';
 import 'widgets/custom_appbar.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late HomeScreenViewModel homeScreenViewModel;
+
+  @override
+  void didChangeDependencies() {
+    homeScreenViewModel = context.watch<HomeScreenViewModel>();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         SegmentedTabControl(
+                          controller: homeScreenViewModel.tabController,
                           radius: const Radius.circular(25),
                           backgroundColor: Theme.of(context).primaryColor,
                           indicatorColor: Theme.of(context).indicatorColor,
@@ -54,6 +70,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: TabBarView(
+                            controller:homeScreenViewModel.tabController,
                             physics: NeverScrollableScrollPhysics(),
                             children: [
                               ForYouPage(),

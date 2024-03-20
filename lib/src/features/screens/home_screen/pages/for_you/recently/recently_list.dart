@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -229,14 +230,14 @@ class _RecentlyListState extends State<RecentlyList> {
               },
               itemCount: recentlyPlayedProviderW.dataBase.length,
             )
-          : const Center(
+          : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.music_note,
-                    size: 50,
-                    color: Colors.grey,
+                  SizedBox.square(
+                    dimension: 100,
+                    child: LottieBuilder.asset(
+                        "assets/images/Animation - 1710632683344.json"),
                   ),
                   SizedBox(height: 10),
                   Text(

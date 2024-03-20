@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_test/src/app.dart';
 import 'package:music_test/src/data/providers/mixes/mixes_provider.dart';
+import 'package:music_test/src/data/providers/top_songs/top_songs_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'src/data/providers/favourite_cloud/favourite_cloud.dart';
@@ -21,6 +22,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => RecentlyPlayedProvider()),
         ChangeNotifierProvider(create: (_) => FavouriteCloudViewModel()),
         ChangeNotifierProvider(create: (_) => MixProvider()),
+        ChangeNotifierProvider(create: (_) => YourTopSongsProvider()),
       ],
       child: const MyApp(),
     ),

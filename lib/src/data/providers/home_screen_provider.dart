@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
 
 import '../models/fake_data.dart';
 
-class HomeScreenViewModel extends ChangeNotifier {
+class HomeScreenViewModel extends ChangeNotifier implements TickerProvider {
   final fakeData = FakeData();
 
   String? currentSingerImage;
@@ -19,6 +20,12 @@ class HomeScreenViewModel extends ChangeNotifier {
   String? currentSingerCardImage;
 
   String? currentMusicImage;
+
+  late TabController tabController;
+
+  HomeScreenViewModel() {
+    tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+  }
 
   changeCurrentMusicName(String? str) {
     currentMusicName = str;
@@ -49,4 +56,7 @@ class HomeScreenViewModel extends ChangeNotifier {
     currentSingerCardName = str;
     notifyListeners();
   }
+
+  @override
+  Ticker createTicker(onTick) => Ticker(onTick);
 }

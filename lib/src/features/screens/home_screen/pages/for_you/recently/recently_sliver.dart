@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:text_marquee/text_marquee.dart';
@@ -10,6 +11,7 @@ import '../../../../../../data/models/model.dart';
 import '../../../../../../data/providers/home_screen_provider.dart';
 import '../../../../../../data/providers/player/player_provider.dart';
 import '../../../../../../data/providers/recently/recently_provider.dart';
+import '../../../home_screen.dart';
 
 class RecentlySliver extends StatefulWidget {
   const RecentlySliver({super.key});
@@ -201,16 +203,28 @@ class _RecentlySliverState extends State<RecentlySliver> {
                   scrollDirection: Axis.horizontal,
                 ),
               )
-            : const Center(
+            : Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.music_note,
-                      size: 50,
-                      color: Colors.grey,
+                    SizedBox.square(
+                      dimension: 100,
+                      child: LottieBuilder.asset(
+                          "assets/images/Animation - 1710632683344.json"),
                     ),
                     SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () {
+                        viewModelRead.tabController.animateTo(1);
+                      },
+                      child: Text(
+                        "Play something",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.green,
+                        ),
+                      ),
+                    ),
                     Text(
                       "No recently played songs",
                       style: TextStyle(
